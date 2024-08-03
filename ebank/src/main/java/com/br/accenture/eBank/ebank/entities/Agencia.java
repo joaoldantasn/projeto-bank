@@ -19,6 +19,7 @@ public class Agencia {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long idAgencia;
 	private int codAgencia;
+	//nomeagencia
 	private String endereco;
 	private String telefone;
 	

@@ -37,13 +37,28 @@ public class AgenciaService {
 	@Transactional
 	public AgenciaDTO insert(AgenciaDTO dto) {
 		Agencia entity = new Agencia();
-		entity.setCodAgencia(dto.getCodAgencia());
-		entity.setEndereco(dto.getEndereco());
-		entity.setTelefone(dto.getTelefone());
+		copyDtoToEntity(dto, entity);
 		
 		entity = repository.save(entity);
 		
 		return new AgenciaDTO(entity);
+	}
+	
+	@Transactional
+	public AgenciaDTO update(Long id, AgenciaDTO dto) {
+		Agencia entity = repository.getReferenceById(id);
+		copyDtoToEntity(dto, entity);
+		
+		entity = repository.save(entity);
+		
+		return new AgenciaDTO(entity);
+	}
+	
+	
+	private void copyDtoToEntity(AgenciaDTO dto, Agencia entity) {
+		entity.setCodAgencia(dto.getCodAgencia());
+		entity.setEndereco(dto.getEndereco());
+		entity.setTelefone(dto.getTelefone());
 	}
 	
 	
