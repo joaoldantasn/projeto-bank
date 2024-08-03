@@ -2,6 +2,8 @@ package com.br.accenture.eBank.ebank.services;
 
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,5 +23,12 @@ public class AgenciaService {
 		AgenciaDTO dto = new AgenciaDTO(agencia);
 		return dto;
 	}
+	
+	@Transactional(readOnly = true)
+	public Page<AgenciaDTO> findAll(Pageable pageable) {
+		Page<Agencia> resultado = repository.findAll(pageable);
+		return resultado.map(x -> new AgenciaDTO(x));
+	}
+	
 	
 }

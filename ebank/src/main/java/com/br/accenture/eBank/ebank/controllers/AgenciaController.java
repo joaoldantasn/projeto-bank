@@ -1,5 +1,7 @@
 package com.br.accenture.eBank.ebank.controllers;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,4 +22,8 @@ public class AgenciaController {
 		return dto;
 	}
 	
+	@GetMapping
+	public Page<AgenciaDTO> findAll(Pageable pageable){
+		return service.findAll(pageable);
+	}
 }
