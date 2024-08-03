@@ -2,6 +2,7 @@ package com.br.accenture.eBank.ebank.services;
 
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -14,6 +15,7 @@ import com.br.accenture.eBank.ebank.repositories.AgenciaRepository;
 @Service
 public class AgenciaService {
 
+	@Autowired
 	private AgenciaRepository repository;
 	
 	@Transactional(readOnly = true)
