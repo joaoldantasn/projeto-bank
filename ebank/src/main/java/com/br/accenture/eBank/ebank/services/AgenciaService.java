@@ -19,6 +19,7 @@ public class AgenciaService {
 	@Autowired
 	private AgenciaRepository repository;
 	
+	
 	@Transactional(readOnly = true)
 	public AgenciaComUsuariosDTO findById(Long id) {
 		Optional<Agencia> resultado = repository.findById(id);

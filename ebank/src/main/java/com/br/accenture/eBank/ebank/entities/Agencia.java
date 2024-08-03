@@ -1,7 +1,5 @@
 package com.br.accenture.eBank.ebank.entities;
-
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
 
 import jakarta.persistence.Entity;
@@ -14,20 +12,19 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "tb_agencia")
 public class Agencia {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long idAgencia;
 	private int codAgencia;
-	//nomeagencia
 	private String endereco;
 	private String telefone;
-	
+
 	@OneToMany(mappedBy = "agencia")
 	private Set<Usuario>usuarios = new HashSet<>();
-	
+
 	public Agencia() {
-		
+
 	}
 
 	public Agencia(Long idAgencia, int codAgencia, String endereco, String telefone) {
@@ -73,27 +70,5 @@ public class Agencia {
 		return usuarios;
 	}
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(idAgencia);
-	}
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Agencia other = (Agencia) obj;
-		return Objects.equals(idAgencia, other.idAgencia);
-	}
-
-	// Adiciona um usuário à agência
-	public void addUsuario(Usuario usuario) {
-		usuarios.add(usuario);
-		usuario.setAgencia(this);
-	}
-	
 }
