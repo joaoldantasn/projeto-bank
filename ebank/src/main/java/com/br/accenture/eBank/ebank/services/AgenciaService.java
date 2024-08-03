@@ -31,4 +31,18 @@ public class AgenciaService {
 	}
 	
 	
+	//Salva no repositorio como Agencia porém ele recebe um DTO por isso tem que transformar
+	@Transactional
+	public AgenciaDTO insert(AgenciaDTO dto) {
+		Agencia entity = new Agencia();
+		entity.setCodAgencia(dto.getCodAgencia());
+		entity.setEndereco(dto.getEndereco());
+		entity.setTelefone(dto.getTelefone());
+		
+		entity = repository.save(entity);
+		
+		return new AgenciaDTO(entity);
+	}
+	
+	
 }
