@@ -1,11 +1,15 @@
 package com.br.accenture.eBank.ebank.entities;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -23,6 +27,9 @@ public class Usuario {
 	@ManyToOne
 	@JoinColumn(name = "agencia_id")
 	private Agencia agencia;
+	
+	@OneToMany(mappedBy = "usuario")
+	private Set<Conta>contas = new HashSet<>();
 	
 	public Usuario() {
 		
@@ -96,6 +103,11 @@ public class Usuario {
 
 	public void setAgencia(Agencia agencia) {
 		this.agencia = agencia;
+	}
+
+
+	public Set<Conta> getContas() {
+		return contas;
 	}
 
 	
