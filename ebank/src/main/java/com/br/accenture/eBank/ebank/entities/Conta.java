@@ -6,6 +6,8 @@ import com.br.accenture.eBank.ebank.entities.enums.TipoConta;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -25,13 +27,14 @@ public class Conta {
 	private BigDecimal saldo;
 	private boolean ativa;
 	private String chavePix;
+	@Enumerated(EnumType.STRING)  // Mapeia o enum como um valor ordinal (número)
 	private TipoConta tipoConta;
 	
 	@ManyToOne
 	@JoinColumn(name = "usuario_id")
 	private Usuario usuario;
 	
-	@OneToOne(mappedBy = "conta", cascade = CascadeType.ALL)
+	@OneToOne(mappedBy = "conta", cascade = CascadeType.ALL, orphanRemoval = true)
 	private Extrato extrato;
 	
 	public Conta() {

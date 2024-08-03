@@ -5,9 +5,12 @@ import java.time.Instant;
 import com.br.accenture.eBank.ebank.entities.enums.Operacao;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.MapsId;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
@@ -20,9 +23,11 @@ public class Extrato {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long idExtrato;
 	private Instant dataHoraMov;
+	@Enumerated(EnumType.STRING) // Mapeia o enum como um valor ordinal (número)
 	private Operacao operacao;
 	
 	@OneToOne
+	@JoinColumn(name="conta_id")
 	@MapsId
 	private Conta conta;
 	
@@ -68,9 +73,5 @@ public class Extrato {
 	public void setConta(Conta conta) {
 		this.conta = conta;
 	}
-	
-	
-	
-	
 	
 }

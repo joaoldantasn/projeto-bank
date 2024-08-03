@@ -4,6 +4,6 @@ public enum Operacao {
 	
 	SAQUE,
 	DEPOSITO,
-	OPERACAO
+	TRANSFERENCIA
 	
 }

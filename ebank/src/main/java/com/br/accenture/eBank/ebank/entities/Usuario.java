@@ -109,6 +109,11 @@ public class Usuario {
 	public Set<Conta> getContas() {
 		return contas;
 	}
-
+	
+	// Adiciona uma conta ao usuário
+	public void addConta(Conta conta) {
+		contas.add(conta);
+		conta.setUsuario(this);
+	}
 	
 }

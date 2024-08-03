@@ -71,5 +71,10 @@ public class Agencia {
 		return usuarios;
 	}
 
+	// Adiciona um usuário à agência
+	public void addUsuario(Usuario usuario) {
+		usuarios.add(usuario);
+		usuario.setAgencia(this);
+	}
 	
 }
