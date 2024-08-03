@@ -54,12 +54,16 @@ public class AgenciaService {
 		return new AgenciaDTO(entity);
 	}
 	
-	
+	@Transactional
 	private void copyDtoToEntity(AgenciaDTO dto, Agencia entity) {
 		entity.setCodAgencia(dto.getCodAgencia());
 		entity.setEndereco(dto.getEndereco());
 		entity.setTelefone(dto.getTelefone());
 	}
 	
+	@Transactional
+	public void delete(Long id) {
+		repository.deleteById(id);
+	}
 	
 }
