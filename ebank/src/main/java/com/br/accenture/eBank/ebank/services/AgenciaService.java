@@ -8,6 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.br.accenture.eBank.ebank.dtos.AgenciaComUsuariosDTO;
 import com.br.accenture.eBank.ebank.dtos.AgenciaDTO;
 import com.br.accenture.eBank.ebank.entities.Agencia;
 import com.br.accenture.eBank.ebank.repositories.AgenciaRepository;
@@ -19,10 +20,10 @@ public class AgenciaService {
 	private AgenciaRepository repository;
 	
 	@Transactional(readOnly = true)
-	public AgenciaDTO findById(Long id) {
+	public AgenciaComUsuariosDTO findById(Long id) {
 		Optional<Agencia> resultado = repository.findById(id);
 		Agencia agencia = resultado.get();
-		AgenciaDTO dto = new AgenciaDTO(agencia);
+		AgenciaComUsuariosDTO dto = new AgenciaComUsuariosDTO(agencia);
 		return dto;
 	}
 	

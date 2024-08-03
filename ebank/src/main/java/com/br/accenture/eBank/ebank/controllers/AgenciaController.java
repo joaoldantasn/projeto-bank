@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.br.accenture.eBank.ebank.dtos.AgenciaComUsuariosDTO;
 import com.br.accenture.eBank.ebank.dtos.AgenciaDTO;
 import com.br.accenture.eBank.ebank.services.AgenciaService;
 
@@ -27,8 +28,8 @@ public class AgenciaController {
 	private AgenciaService service;
 	
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<AgenciaDTO> findById(@PathVariable Long id) {
-		AgenciaDTO dto = service.findById(id);
+	public ResponseEntity<AgenciaComUsuariosDTO> findById(@PathVariable Long id) {
+		AgenciaComUsuariosDTO dto = service.findById(id);
 		return ResponseEntity.ok(dto);
 	}
 	
