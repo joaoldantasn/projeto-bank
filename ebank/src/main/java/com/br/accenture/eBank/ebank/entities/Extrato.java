@@ -1,6 +1,7 @@
 package com.br.accenture.eBank.ebank.entities;
 
 import java.time.Instant;
+import java.util.Objects;
 
 import com.br.accenture.eBank.ebank.entities.enums.Operacao;
 
@@ -73,5 +74,22 @@ public class Extrato {
 	public void setConta(Conta conta) {
 		this.conta = conta;
 	}
-	
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(idExtrato);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Extrato other = (Extrato) obj;
+		return Objects.equals(idExtrato, other.idExtrato);
+	}
+
 }

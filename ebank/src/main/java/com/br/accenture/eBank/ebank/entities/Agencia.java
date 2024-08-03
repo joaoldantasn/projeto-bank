@@ -1,6 +1,7 @@
 package com.br.accenture.eBank.ebank.entities;
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 import jakarta.persistence.Entity;
@@ -69,6 +70,23 @@ public class Agencia {
 
 	public Set<Usuario> getUsuarios() {
 		return usuarios;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(idAgencia);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Agencia other = (Agencia) obj;
+		return Objects.equals(idAgencia, other.idAgencia);
 	}
 
 	// Adiciona um usuário à agência

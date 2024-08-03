@@ -1,6 +1,7 @@
 package com.br.accenture.eBank.ebank.entities;
 
 import java.math.BigDecimal;
+import java.util.Objects;
 
 import com.br.accenture.eBank.ebank.entities.enums.TipoConta;
 
@@ -112,6 +113,22 @@ public class Conta {
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
 	}
-	
-	
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(idConta);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Conta other = (Conta) obj;
+		return Objects.equals(idConta, other.idConta);
+	}
+
 }
