@@ -5,13 +5,13 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import com.br.accenture.eBank.ebank.entities.Agencia;
-import com.br.accenture.eBank.ebank.entities.Usuario;
+import com.br.accenture.eBank.ebank.entities.Endereco;
 
 public class AgenciaComUsuariosDTO {
 
 	private Long idAgencia;
 	private int codAgencia;
-	private String endereco;
+	private Endereco endereco;
 	private String telefone;
 	private Set<UsuarioDTO> usuarios = new HashSet<>();
 	
@@ -19,13 +19,14 @@ public class AgenciaComUsuariosDTO {
 		
 	}
 
-	
-	public AgenciaComUsuariosDTO(Long idAgencia, int codAgencia, String endereco, String telefone,
-			Set<Usuario> usuarios) {
+	public AgenciaComUsuariosDTO(Long idAgencia, int codAgencia, Endereco endereco, String telefone,
+			Set<UsuarioDTO> usuarios) {
+		super();
 		this.idAgencia = idAgencia;
 		this.codAgencia = codAgencia;
 		this.endereco = endereco;
 		this.telefone = telefone;
+		this.usuarios = usuarios;
 	}
 
 	public AgenciaComUsuariosDTO(Agencia entity) {
@@ -44,7 +45,7 @@ public class AgenciaComUsuariosDTO {
 		return codAgencia;
 	}
 
-	public String getEndereco() {
+	public Endereco getEndereco() {
 		return endereco;
 	}
 

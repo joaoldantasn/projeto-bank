@@ -2,11 +2,16 @@ package com.br.accenture.eBank.ebank.entities;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.MapsId;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -17,8 +22,13 @@ public class Agencia {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long idAgencia;
 	private int codAgencia;
-	private String endereco;
 	private String telefone;
+	
+	@OneToOne
+	@JoinColumn(name="endereco_id")
+	@MapsId
+	@JsonManagedReference
+	private Endereco endereco;
 
 	@OneToMany(mappedBy = "agencia")
 	private Set<Usuario>usuarios = new HashSet<>();
@@ -27,11 +37,11 @@ public class Agencia {
 
 	}
 
-	public Agencia(Long idAgencia, int codAgencia, String endereco, String telefone) {
+	public Agencia(Long idAgencia, int codAgencia, String telefone, Endereco endereco) {
 		this.idAgencia = idAgencia;
 		this.codAgencia = codAgencia;
-		this.endereco = endereco;
 		this.telefone = telefone;
+		this.endereco = endereco;
 	}
 
 	public Long getIdAgencia() {
@@ -49,12 +59,12 @@ public class Agencia {
 	public void setCodAgencia(int codAgencia) {
 		this.codAgencia = codAgencia;
 	}
-
-	public String getEndereco() {
+	
+	public Endereco getEndereco() {
 		return endereco;
 	}
 
-	public void setEndereco(String endereco) {
+	public void setEndereco(Endereco endereco) {
 		this.endereco = endereco;
 	}
 
