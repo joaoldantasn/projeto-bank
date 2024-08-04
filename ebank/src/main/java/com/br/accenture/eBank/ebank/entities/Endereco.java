@@ -1,5 +1,7 @@
 package com.br.accenture.eBank.ebank.entities;
 
+import java.util.Set;
+
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import jakarta.persistence.CascadeType;
@@ -7,6 +9,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
@@ -26,6 +29,9 @@ public class Endereco {
 	@OneToOne(mappedBy = "endereco", cascade = CascadeType.ALL, orphanRemoval = true)
 	@JsonBackReference
 	private Agencia agencia;
+	
+	@OneToMany(mappedBy = "endereco")
+    private Set<Usuario> usuarios;
 	
 	public Endereco() {
 		
@@ -96,6 +102,10 @@ public class Endereco {
 
 	public void setAgencia(Agencia agencia) {
 		this.agencia = agencia;
+	}
+
+	public Set<Usuario> getUsuarios() {
+		return usuarios;
 	}	
 	
 }

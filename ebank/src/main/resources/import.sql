@@ -2,6 +2,14 @@
 INSERT INTO tb_endereco (cep, logradouro, cidade, bairro, numero) VALUES ('12345-678', 'Rua Exemplo', 'Cidade Exemplo', 'Bairro Exemplo', '123');
 INSERT INTO tb_endereco (cep, logradouro, cidade, bairro, numero) VALUES ('23456-789', 'Avenida Teste', 'Cidade Teste', 'Bairro Teste', '456');
 INSERT INTO tb_endereco (cep, logradouro, cidade, bairro, numero) VALUES ('34567-890', 'Travessa Demo', 'Cidade Demo', 'Bairro Demo', '789');
+INSERT INTO tb_endereco (cep, logradouro, cidade, bairro, numero) VALUES ('45678-901', 'Rua Modelo', 'Cidade Modelo', 'Bairro Modelo', '101');
+INSERT INTO tb_endereco (cep, logradouro, cidade, bairro, numero) VALUES ('56789-012', 'Avenida Exemplo 2', 'Cidade Exemplo 2', 'Bairro Exemplo 2', '202');
+INSERT INTO tb_endereco (cep, logradouro, cidade, bairro, numero) VALUES ('67890-123', 'Travessa Teste 2', 'Cidade Teste 2', 'Bairro Teste 2', '303');
+INSERT INTO tb_endereco (cep, logradouro, cidade, bairro, numero) VALUES ('78901-234', 'Rua Exemplar', 'Cidade Exemplar', 'Bairro Exemplar', '404');
+INSERT INTO tb_endereco (cep, logradouro, cidade, bairro, numero) VALUES ('89012-345', 'Avenida Demo 2', 'Cidade Demo 2', 'Bairro Demo 2', '505');
+INSERT INTO tb_endereco (cep, logradouro, cidade, bairro, numero) VALUES ('90123-456', 'Travessa Modelo 2', 'Cidade Modelo 2', 'Bairro Modelo 2', '606');
+INSERT INTO tb_endereco (cep, logradouro, cidade, bairro, numero) VALUES ('01234-567', 'Rua Teste 3', 'Cidade Teste 3', 'Bairro Teste 3', '707');
+
 
 -- Inserir Agências
 INSERT INTO tb_agencia (cod_agencia, endereco_id, telefone) VALUES (1234, 1, '1234-5678');
@@ -9,16 +17,17 @@ INSERT INTO tb_agencia (cod_agencia, endereco_id, telefone) VALUES (1235, 2, '12
 INSERT INTO tb_agencia (cod_agencia, endereco_id, telefone) VALUES (1236, 3, '1234-5680');
 
 -- Inserir Usuários
-INSERT INTO tb_usuario (cpf, nome_usuario, telefone, senha, agencia_id) VALUES ('123.456.789-00', 'João Silva', '1234-5678', 'senha123', 1);
-INSERT INTO tb_usuario (cpf, nome_usuario, telefone, senha, agencia_id) VALUES ('987.654.321-00', 'Maria Souza', '1234-5679', 'senha456', 2);
-INSERT INTO tb_usuario (cpf, nome_usuario, telefone, senha, agencia_id) VALUES ('456.789.123-00', 'Carlos Pereira', '1234-5680', 'senha789', 3);
-INSERT INTO tb_usuario (cpf, nome_usuario, telefone, senha, agencia_id) VALUES ('789.123.456-00', 'Ana Costa', '1234-5681', 'senha012', 1);
-INSERT INTO tb_usuario (cpf, nome_usuario, telefone, senha, agencia_id) VALUES ('321.654.987-00', 'José Santos', '1234-5682', 'senha345', 2);
-INSERT INTO tb_usuario (cpf, nome_usuario, telefone, senha, agencia_id) VALUES ('654.987.321-00', 'Fernanda Lima', '1234-5683', 'senha678', 3);
-INSERT INTO tb_usuario (cpf, nome_usuario, telefone, senha, agencia_id) VALUES ('111.222.333-44', 'Paulo Almeida', '1234-5684', 'senha901', 1);
-INSERT INTO tb_usuario (cpf, nome_usuario, telefone, senha, agencia_id) VALUES ('222.333.444-55', 'Juliana Mendes', '1234-5685', 'senha234', 2);
-INSERT INTO tb_usuario (cpf, nome_usuario, telefone, senha, agencia_id) VALUES ('333.444.555-66', 'Bruno Oliveira', '1234-5686', 'senha567', 3);
-INSERT INTO tb_usuario (cpf, nome_usuario, telefone, senha, agencia_id) VALUES ('444.555.666-77', 'Patrícia Moreira', '1234-5687', 'senha890', 1);
+INSERT INTO tb_usuario (cpf, nome_usuario, telefone, senha, agencia_id, endereco_id) VALUES ('123.456.789-00', 'João Silva', '1234-5678', 'senha123', 1, 4);
+INSERT INTO tb_usuario (cpf, nome_usuario, telefone, senha, agencia_id, endereco_id) VALUES ('987.654.321-00', 'Maria Souza', '1234-5679', 'senha456', 2, 5);
+INSERT INTO tb_usuario (cpf, nome_usuario, telefone, senha, agencia_id, endereco_id) VALUES ('456.789.123-00', 'Carlos Pereira', '1234-5680', 'senha789', 3, 7);
+INSERT INTO tb_usuario (cpf, nome_usuario, telefone, senha, agencia_id, endereco_id) VALUES ('789.123.456-00', 'Ana Costa', '1234-5681', 'senha012', 1, 6);
+INSERT INTO tb_usuario (cpf, nome_usuario, telefone, senha, agencia_id, endereco_id) VALUES ('321.654.987-00', 'José Santos', '1234-5682', 'senha345', 2, 8);
+INSERT INTO tb_usuario (cpf, nome_usuario, telefone, senha, agencia_id, endereco_id) VALUES ('654.987.321-00', 'Fernanda Lima', '1234-5683', 'senha678', 3, 7);
+INSERT INTO tb_usuario (cpf, nome_usuario, telefone, senha, agencia_id, endereco_id) VALUES ('111.222.333-44', 'Paulo Almeida', '1234-5684', 'senha901', 1, 10);
+INSERT INTO tb_usuario (cpf, nome_usuario, telefone, senha, agencia_id, endereco_id) VALUES ('222.333.444-55', 'Juliana Mendes', '1234-5685', 'senha234', 2, 4);
+INSERT INTO tb_usuario (cpf, nome_usuario, telefone, senha, agencia_id, endereco_id) VALUES ('333.444.555-66', 'Bruno Oliveira', '1234-5686', 'senha567', 3, 9);
+INSERT INTO tb_usuario (cpf, nome_usuario, telefone, senha, agencia_id, endereco_id) VALUES ('444.555.666-77', 'Patrícia Moreira', '1234-5687', 'senha890', 1, 10);
+
 
 -- Inserir Contas
 INSERT INTO tb_conta (numero_conta, saldo, ativa, chave_pix, tipo_conta, usuario_id) VALUES (987654, 1000.00, TRUE, 'joao.silva@pix.com', 'POUPANCA', 1);

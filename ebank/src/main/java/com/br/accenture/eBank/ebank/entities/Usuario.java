@@ -26,6 +26,10 @@ public class Usuario {
 	private String senha;
 	
 	@ManyToOne
+    @JoinColumn(name = "endereco_id")
+    private Endereco endereco;
+	
+	@ManyToOne
 	@JoinColumn(name = "agencia_id")
 	private Agencia agencia;
 	
@@ -35,17 +39,18 @@ public class Usuario {
 	public Usuario() {
 		
 	}
-	
 
-	public Usuario(Long idUsuario, String cpf, String nomeUsuario, String telefone, String senha, Agencia agencia) {
+	public Usuario(Long idUsuario, String cpf, String nomeUsuario, String telefone, String senha, Endereco endereco,
+			Agencia agencia) {
+		super();
 		this.idUsuario = idUsuario;
 		this.cpf = cpf;
 		this.nomeUsuario = nomeUsuario;
 		this.telefone = telefone;
 		this.senha = senha;
+		this.endereco = endereco;
 		this.agencia = agencia;
 	}
-
 
 	public Long getIdUsuario() {
 		return idUsuario;
@@ -111,6 +116,14 @@ public class Usuario {
 		return contas;
 	}
 	
+	public Endereco getEndereco() {
+		return endereco;
+	}
+
+	public void setEndereco(Endereco endereco) {
+		this.endereco = endereco;
+	}
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(idUsuario);
