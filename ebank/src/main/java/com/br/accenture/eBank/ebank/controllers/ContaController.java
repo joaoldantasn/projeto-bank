@@ -2,7 +2,6 @@ package com.br.accenture.eBank.ebank.controllers;
 
 import com.br.accenture.eBank.ebank.dtos.ContaDTO;
 import com.br.accenture.eBank.ebank.dtos.ExtratoDTO;
-import com.br.accenture.eBank.ebank.repositories.ExtratoRepository;
 import com.br.accenture.eBank.ebank.services.ContaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -54,7 +53,9 @@ public class ContaController {
     }
     @GetMapping("/extrato/{id}")
     public ResponseEntity<ExtratoDTO> getExtrato(@PathVariable Long id) {
-        return ResponseEntity.ok(service.getExtrato(id));
+
+        ExtratoDTO extratoDTO = service.getExtrato(id);
+        return ResponseEntity.ok(extratoDTO);
     }
 
 }
