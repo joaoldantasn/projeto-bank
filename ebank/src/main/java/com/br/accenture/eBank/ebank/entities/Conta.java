@@ -1,21 +1,10 @@
 package com.br.accenture.eBank.ebank.entities;
 
+import com.br.accenture.eBank.ebank.entities.enums.TipoConta;
+import jakarta.persistence.*;
+
 import java.math.BigDecimal;
 import java.util.Objects;
-
-import com.br.accenture.eBank.ebank.entities.enums.TipoConta;
-
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "tb_conta")
@@ -30,7 +19,7 @@ public class Conta {
 	private String chavePix;
 	@Enumerated(EnumType.STRING)  // Mapeia o enum como um valor ordinal (número)
 	private TipoConta tipoConta;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "usuario_id")
 	private Usuario usuario;
@@ -41,8 +30,8 @@ public class Conta {
 	public Conta() {
 		
 	}
-	
-	
+
+
 
 	public Conta(Long idConta, int numeroConta, BigDecimal saldo, boolean ativa, String chavePix, TipoConta tipoConta,
 			Usuario usuario, Extrato extrato) {
@@ -112,6 +101,14 @@ public class Conta {
 
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
+	}
+
+	public Extrato getExtrato() {
+		return extrato;
+	}
+
+	public void setExtrato(Extrato extrato) {
+		this.extrato = extrato;
 	}
 
 	@Override

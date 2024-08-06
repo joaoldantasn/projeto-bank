@@ -4,14 +4,7 @@ import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "tb_endereco")
@@ -30,7 +23,7 @@ public class Endereco {
 	@JsonBackReference
 	private Agencia agencia;
 	
-	@OneToMany(mappedBy = "endereco")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "endereco")
     private Set<Usuario> usuarios;
 	
 	public Endereco() {
