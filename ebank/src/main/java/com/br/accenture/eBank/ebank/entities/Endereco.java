@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -30,7 +31,7 @@ public class Endereco {
 	@JsonBackReference
 	private Agencia agencia;
 	
-	@OneToMany(mappedBy = "endereco")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "endereco")
     private Set<Usuario> usuarios;
 	
 	public Endereco() {
