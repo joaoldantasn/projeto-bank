@@ -74,8 +74,8 @@ public class ContaService {
 
     public ExtratoDTO getExtrato(Long contaId) {
 
-        Extrato extrato = extratoRepository.findByConta_IdConta(contaId).orElseThrow(() -> new RuntimeException("Conta Nào encontrada!"));
-        System.out.println(extrato.toString());
+        Extrato extrato = extratoRepository.findByConta_IdConta(contaId).orElseThrow(() -> new RuntimeException("Conta Não encontrada!"));
+
         return new ExtratoDTO(extrato);
     }
 

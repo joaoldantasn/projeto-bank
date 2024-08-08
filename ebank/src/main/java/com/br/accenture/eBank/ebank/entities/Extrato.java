@@ -4,45 +4,50 @@ import java.time.Instant;
 import java.util.Objects;
 
 import com.br.accenture.eBank.ebank.entities.enums.Operacao;
-
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.MapsId;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import jakarta.persistence.*;
+import org.antlr.v4.runtime.misc.NotNull;
 
 @Entity
-@Table(name="tb_extrato")
+@Table(name = "tb_extrato")
 public class Extrato {
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long idExtrato;
-	private Instant dataHoraMov;
-	@Enumerated(EnumType.STRING) // Mapeia o enum como um valor ordinal (número)
-	private Operacao operacao;
-	
-	@OneToOne
-	@JoinColumn(name="conta_id")
-	@MapsId
-	private Conta conta;
-	
-	public Extrato() {
-		
-	}
 
-	public Extrato(Long idExtrato, Instant dataHoraMov, Operacao operacao, Conta conta) {
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'")
+	private Instant dataHoraMov;
+
+	@Enumerated(EnumType.STRING)
+	private Operacao operacao;
+
+	private Double valor;
+
+	private String descricao;
+
+	@ManyToOne
+	@JoinColumn(name = "conta_id")
+	@NotNull
+	private Conta conta;
+
+	@ManyToOne
+	@JoinColumn(name = "conta_destinatario_id")
+	private Conta contaDestinatario;
+
+	public Extrato() {}
+
+	public Extrato(Long idExtrato, Instant dataHoraMov, Operacao operacao, Double valor, String descricao, Conta conta, Conta contaDestinatario) {
 		this.idExtrato = idExtrato;
 		this.dataHoraMov = dataHoraMov;
 		this.operacao = operacao;
+		this.valor = valor;
+		this.descricao = descricao;
 		this.conta = conta;
+		this.contaDestinatario = contaDestinatario;
 	}
 
+	// Getters and Setters
 	public Long getIdExtrato() {
 		return idExtrato;
 	}
@@ -67,12 +72,36 @@ public class Extrato {
 		this.operacao = operacao;
 	}
 
+	public Double getValor() {
+		return valor;
+	}
+
+	public void setValor(Double valor) {
+		this.valor = valor;
+	}
+
+	public String getDescricao() {
+		return descricao;
+	}
+
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
+	}
+
 	public Conta getConta() {
 		return conta;
 	}
 
 	public void setConta(Conta conta) {
 		this.conta = conta;
+	}
+
+	public Conta getContaDestinatario() {
+		return contaDestinatario;
+	}
+
+	public void setContaDestinatario(Conta contaDestinatario) {
+		this.contaDestinatario = contaDestinatario;
 	}
 
 	@Override
@@ -91,5 +120,4 @@ public class Extrato {
 		Extrato other = (Extrato) obj;
 		return Objects.equals(idExtrato, other.idExtrato);
 	}
-
 }
