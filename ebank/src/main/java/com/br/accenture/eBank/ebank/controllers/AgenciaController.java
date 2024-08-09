@@ -21,7 +21,7 @@ import com.br.accenture.eBank.ebank.dtos.AgenciaDTO;
 import com.br.accenture.eBank.ebank.services.AgenciaService;
 
 @RestController
-@RequestMapping(value = "/agencias")
+@RequestMapping(value = "/api/agencias")
 public class AgenciaController {
 
 	@Autowired
@@ -39,7 +39,7 @@ public class AgenciaController {
 		return ResponseEntity.ok(dto);
 	}
 	
-	@PostMapping
+	@PostMapping(value = "/adicionar")
 	public ResponseEntity<AgenciaDTO> insert(@RequestBody AgenciaDTO dto) {
 		dto = service.insert(dto);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
@@ -47,13 +47,13 @@ public class AgenciaController {
 		return ResponseEntity.created(uri).body(dto);
 	}
 	
-	@PutMapping(value = "/{id}")
+	@PutMapping(value = "/atualizar/{id}")
 	public ResponseEntity<AgenciaDTO> update(@PathVariable Long id, @RequestBody AgenciaDTO dto) {
 		dto = service.update(id, dto);
 		return ResponseEntity.ok(dto);
 	}
 	
-	@DeleteMapping(value = "/{id}")
+	@DeleteMapping(value = "/deletar/{id}")
 	public ResponseEntity<Void> delete(@PathVariable Long id) {
 		service.delete(id);
 		return ResponseEntity.noContent().build();

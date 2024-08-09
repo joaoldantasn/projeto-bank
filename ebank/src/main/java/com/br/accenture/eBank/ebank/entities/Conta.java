@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.Objects;
 
 import com.br.accenture.eBank.ebank.entities.enums.TipoConta;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -33,6 +34,7 @@ public class Conta {
 	
 	@ManyToOne
 	@JoinColumn(name = "usuario_id")
+	@JsonIgnore
 	private Usuario usuario;
 	
 	@OneToOne(mappedBy = "conta", cascade = CascadeType.ALL, orphanRemoval = true)
