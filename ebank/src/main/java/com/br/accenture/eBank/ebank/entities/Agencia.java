@@ -4,6 +4,7 @@ import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -30,8 +31,9 @@ public class Agencia {
 	@JsonManagedReference
 	private Endereco endereco;
 
-	@OneToMany(mappedBy = "agencia")
-	private Set<Usuario>usuarios = new HashSet<>();
+	@OneToMany(mappedBy = "agencia", cascade = CascadeType.ALL, orphanRemoval = true)
+	@JsonManagedReference
+	private Set<Usuario> usuarios = new HashSet<>();
 
 	public Agencia() {
 

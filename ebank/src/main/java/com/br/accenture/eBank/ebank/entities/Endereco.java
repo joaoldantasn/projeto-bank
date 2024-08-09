@@ -3,6 +3,7 @@ package com.br.accenture.eBank.ebank.entities;
 import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -27,12 +28,15 @@ public class Endereco {
 	private String bairro;
 	private String numero;
 	
+	
 	@OneToOne(mappedBy = "endereco", cascade = CascadeType.ALL, orphanRemoval = true)
 	@JsonBackReference
 	private Agencia agencia;
 	
+	
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "endereco")
-    private Set<Usuario> usuarios;
+	@JsonInclude(JsonInclude.Include.NON_EMPTY)
+	private Set<Usuario> usuarios;
 	
 	public Endereco() {
 		
