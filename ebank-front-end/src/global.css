@@ -1,0 +1,17 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+.titulo1{
+    color: #009e0f;
+}
+
+html, body , #root {
+    height:100vh;
+    margin: 0;
+}
+
+html {
+    font-size: 16px!important;
+  }
