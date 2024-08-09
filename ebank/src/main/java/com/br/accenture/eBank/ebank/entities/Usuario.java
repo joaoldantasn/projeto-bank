@@ -1,7 +1,9 @@
 package com.br.accenture.eBank.ebank.entities;
 
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -10,12 +12,14 @@ import org.springframework.security.core.userdetails.UserDetails;
 import com.br.accenture.eBank.ebank.entities.enums.auth.UserRoles;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Data;
 
@@ -43,15 +47,23 @@ public class Usuario implements UserDetails {
     @ManyToOne
     @JoinColumn(name = "endereco_id")
     private Endereco endereco;
-
+    
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
+	private Set<Conta> contas = new HashSet<>();
 
     public Usuario() {
     }
 
-    public Usuario(String cpf, String senha, UserRoles role) {
+    public Usuario(Long idUsuario, String cpf, String senha, String nomeUsuario, String telefone, UserRoles role, Agencia agencia, Endereco endereco, Set<Conta> contas) {
+        this.idUsuario = idUsuario;
         this.cpf = cpf;
         this.senha = senha;
+        this.nomeUsuario = nomeUsuario;
+        this.telefone = telefone;
         this.role = role;
+        this.agencia = agencia;
+        this.endereco = endereco;
+        this.contas = contas;
     }
     
     //public Usuario(Long idUsuario,String cpf, String nomeUsuario, String telefone) {

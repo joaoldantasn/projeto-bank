@@ -42,7 +42,14 @@ public class Conta {
 		
 	}
 	
-	
+    public Conta(Long idConta, int numeroConta, BigDecimal saldo, Boolean ativa, String chavePix, TipoConta tipoConta) {
+        this.idConta = idConta;
+        this.numeroConta = numeroConta;
+        this.saldo = saldo;
+        this.ativa = ativa;
+        this.chavePix = chavePix;
+        this.tipoConta = tipoConta;
+    }
 
 	public Conta(Long idConta, int numeroConta, BigDecimal saldo, boolean ativa, String chavePix, TipoConta tipoConta,
 			Usuario usuario, Extrato extrato) {

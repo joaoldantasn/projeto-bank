@@ -42,8 +42,9 @@ public class Endereco {
 		
 	}
 
-	public Endereco(Long idEndereco, String cep, String logradouro, String cidade, String bairro, String numero,
-			Agencia agencia) {
+    public Endereco(Long idEndereco, String cep, String logradouro, String cidade, String bairro, String numero,
+			Agencia agencia, Set<Usuario> usuarios) {
+		super();
 		this.idEndereco = idEndereco;
 		this.cep = cep;
 		this.logradouro = logradouro;
@@ -51,7 +52,17 @@ public class Endereco {
 		this.bairro = bairro;
 		this.numero = numero;
 		this.agencia = agencia;
+		this.usuarios = usuarios;
 	}
+
+	public Endereco(Long idEndereco, String cep, String logradouro, String cidade, String bairro, String numero) {
+        this.idEndereco = idEndereco;
+        this.cep = cep;
+        this.logradouro = logradouro;
+        this.cidade = cidade;
+        this.bairro = bairro;
+        this.numero = numero;
+    }
 
 	public Long getIdEndereco() {
 		return idEndereco;
