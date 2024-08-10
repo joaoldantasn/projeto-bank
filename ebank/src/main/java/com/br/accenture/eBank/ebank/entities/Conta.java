@@ -4,7 +4,9 @@ import com.br.accenture.eBank.ebank.entities.enums.TipoConta;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "tb_conta")
@@ -23,18 +25,21 @@ public class Conta {
 	@ManyToOne
 	@JoinColumn(name = "usuario_id")
 	private Usuario usuario;
-	
-	@OneToOne(mappedBy = "conta", cascade = CascadeType.ALL, orphanRemoval = true)
-	private Extrato extrato;
-	
+
+
+	@OneToMany(mappedBy = "conta", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<Transacao> transacoes;
+
+
 	public Conta() {
-		
-	}
+
+
+    }
 
 
 
 	public Conta(Long idConta, int numeroConta, BigDecimal saldo, boolean ativa, String chavePix, TipoConta tipoConta,
-			Usuario usuario, Extrato extrato) {
+                 Usuario usuario, List<Transacao> transacoes) {
 		this.idConta = idConta;
 		this.numeroConta = numeroConta;
 		this.saldo = saldo;
@@ -42,8 +47,8 @@ public class Conta {
 		this.chavePix = chavePix;
 		this.tipoConta = tipoConta;
 		this.usuario = usuario;
-		this.extrato = extrato;
-	}
+        this.transacoes = transacoes;
+    }
 
 
 
@@ -103,13 +108,6 @@ public class Conta {
 		this.usuario = usuario;
 	}
 
-	public Extrato getExtrato() {
-		return extrato;
-	}
-
-	public void setExtrato(Extrato extrato) {
-		this.extrato = extrato;
-	}
 
 	@Override
 	public int hashCode() {

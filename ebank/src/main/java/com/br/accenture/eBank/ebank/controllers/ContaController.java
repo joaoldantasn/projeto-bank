@@ -11,9 +11,10 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.time.Instant;
 
 @RestController
-@RequestMapping(value = "/conta")
+@RequestMapping(value = "/api/conta")
 public class ContaController {
 
     @Autowired
@@ -51,11 +52,17 @@ public class ContaController {
         service.delete(id);
         return ResponseEntity.noContent().build();
     }
-    @GetMapping("/extrato/{id}")
-    public ResponseEntity<ExtratoDTO> getExtrato(@PathVariable Long id) {
 
-        ExtratoDTO extratoDTO = service.getExtrato(id);
-        return ResponseEntity.ok(extratoDTO);
+    @GetMapping("/extrato/{contaId}")
+    public ResponseEntity<ExtratoDTO> getExtrato(
+            @PathVariable("contaId") Long contaId,
+            @RequestParam("startDate") Instant startDate,
+            @RequestParam("endDate") Instant endDate) {
+
+        ExtratoDTO extrato = service.getExtrato(contaId, startDate, endDate);
+
+        return ResponseEntity.ok(extrato);
     }
+
 
 }

@@ -4,10 +4,13 @@ import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
 @Entity
 @Table(name = "tb_endereco")
+@JsonIgnoreProperties({"tb_agencia"})
 public class Endereco {
 
 	@Id
@@ -20,11 +23,11 @@ public class Endereco {
 	private String numero;
 	
 	@OneToOne(mappedBy = "endereco", cascade = CascadeType.ALL, orphanRemoval = true)
-	@JsonBackReference
 	private Agencia agencia;
 	
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "endereco")
-    private Set<Usuario> usuarios;
+	@JsonIgnore
+	private Set<Usuario> usuarios;
 	
 	public Endereco() {
 		

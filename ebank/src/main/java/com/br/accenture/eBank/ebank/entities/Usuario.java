@@ -1,17 +1,12 @@
 package com.br.accenture.eBank.ebank.entities;
 
+import com.br.accenture.eBank.ebank.dtos.UsuarioDTO;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
+
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
-
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "tb_usuario")
@@ -27,7 +22,8 @@ public class Usuario {
 	
 	@ManyToOne
     @JoinColumn(name = "endereco_id")
-    private Endereco endereco;
+	@JsonIgnore
+	private Endereco endereco;
 	
 	@ManyToOne
 	@JoinColumn(name = "agencia_id")
@@ -50,6 +46,16 @@ public class Usuario {
 		this.senha = senha;
 		this.endereco = endereco;
 		this.agencia = agencia;
+	}
+
+	public Usuario(UsuarioDTO usuario) {
+		super();
+		this.idUsuario = usuario.getIdUsuario();
+		this.cpf = usuario.getCpf();
+		this.nomeUsuario = usuario.getNomeUsuario();
+		this.telefone = usuario.getTelefone();
+		this.senha = usuario.getSenha();
+
 	}
 
 	public Long getIdUsuario() {
