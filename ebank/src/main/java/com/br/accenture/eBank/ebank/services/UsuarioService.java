@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.br.accenture.eBank.ebank.dtos.UsuarioContaDTO;
+import com.br.accenture.eBank.ebank.dtos.UsuarioDTO;
 import com.br.accenture.eBank.ebank.entities.Usuario;
 import com.br.accenture.eBank.ebank.repositories.UsuarioRepository;
 
@@ -22,6 +23,29 @@ public class UsuarioService {
 		Usuario usuario = resultado.get();
 		UsuarioContaDTO dto = new UsuarioContaDTO(usuario);
 		return dto;
+	}
+	
+	@Transactional
+	public UsuarioDTO update(Long id, UsuarioDTO dto) {
+		Usuario entity = repository.getReferenceById(id);
+		copyDtoToEntity(dto, entity);
+		
+		entity = repository.save(entity);
+		
+		return new UsuarioDTO(entity);
+	}
+	
+	@Transactional
+	private void copyDtoToEntity(UsuarioDTO dto, Usuario entity) {
+		entity.setCpf(dto.getCpf());
+		entity.setNomeUsuario(dto.getNomeUsuario());
+		entity.setTelefone(dto.getTelefone());
+		entity.setSenha(dto.getSenha());
+	}
+	
+	@Transactional
+	public void delete(Long id) {
+		repository.deleteById(id);
 	}
 	
 }
