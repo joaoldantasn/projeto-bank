@@ -47,12 +47,6 @@ public class AgenciaController {
 		return ResponseEntity.created(uri).body(dto);
 	}
 	
-	@PutMapping(value = "/atualizar/{id}")
-	public ResponseEntity<AgenciaDTO> update(@PathVariable Long id, @RequestBody AgenciaDTO dto) {
-		dto = service.update(id, dto);
-		return ResponseEntity.ok(dto);
-	}
-	
 	@DeleteMapping(value = "/deletar/{id}")
 	public ResponseEntity<Void> delete(@PathVariable Long id) {
 		service.delete(id);

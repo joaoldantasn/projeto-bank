@@ -3,6 +3,7 @@ package com.br.accenture.eBank.ebank.services;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -47,5 +48,17 @@ public class UsuarioService {
 	public void delete(Long id) {
 		repository.deleteById(id);
 	}
+	
+	/*
+	 * Autentica se o usuario está acessando os dados correspondentes ao do seu Login
+	 */
+	public boolean isUserAuthorized(Authentication authentication, Long idUsuario) {
+	    // Recupera o usuário autenticado pelo CPF
+	    Usuario currentUser = (Usuario) repository.findByCpf(authentication.getName());
+
+	    // Verifica se o ID do usuário autenticado corresponde ao ID solicitado
+	    return currentUser.getIdUsuario().equals(idUsuario);
+	}
+
 	
 }

@@ -46,15 +46,6 @@ public class AgenciaService {
 		return new AgenciaDTO(entity);
 	}
 	
-	@Transactional
-	public AgenciaDTO update(Long id, AgenciaDTO dto) {
-		Agencia entity = repository.getReferenceById(id);
-		copyDtoToEntity(dto, entity);
-		
-		entity = repository.save(entity);
-		
-		return new AgenciaDTO(entity);
-	}
 	
 	@Transactional
 	private void copyDtoToEntity(AgenciaDTO dto, Agencia entity) {
