@@ -1,52 +1,97 @@
 package com.br.accenture.eBank.ebank.dtos;
+import com.br.accenture.eBank.ebank.entities.Conta;
+import com.br.accenture.eBank.ebank.entities.Transacao;
 
 import java.time.Instant;
-
-import com.br.accenture.eBank.ebank.entities.Conta;
-import com.br.accenture.eBank.ebank.entities.Extrato;
-import com.br.accenture.eBank.ebank.entities.enums.Operacao;
+import java.util.List;
 
 public class ExtratoDTO {
 
-    private Long idExtrato;
-    private Instant dataHoraMov;
-    private Operacao operacao;
-    private Double valor;
+    private Instant dataHoraGeracao;
+    private String nomeUsuario;
     private String descricao;
-    private Conta conta;
-    private Conta contaDestinatario;
+    private int numAgencia;
+    private int numConta;
 
-    public ExtratoDTO() {}
+    private List<TransacaoExtratoDTO> transacoes;
+    private Instant periodoInicio;
+    private Instant periodoFim;
 
-    public ExtratoDTO(Extrato extrato) {
-        this.idExtrato = extrato.getIdExtrato();
-        this.dataHoraMov = extrato.getDataHoraMov();
-        this.operacao = extrato.getOperacao();
-        this.valor = extrato.getValor();
-        this.descricao = extrato.getDescricao();
-        this.conta = extrato.getConta();
-        this.contaDestinatario = extrato.getContaDestinatario();
+    public ExtratoDTO() {
     }
 
+    public ExtratoDTO(Instant dataHoraMov,String nomeUsuario, String descricao, int numAgencia, int numConta, List<TransacaoExtratoDTO> transacoes, Instant periodoInicio, Instant periodoFim) {
+        this.dataHoraGeracao = dataHoraMov;
+        this.nomeUsuario = nomeUsuario;
+        this.descricao = descricao;
+        this.numAgencia = numAgencia;
+        this.numConta = numConta;
+        this.transacoes = transacoes;
+        this.periodoInicio = periodoInicio;
+        this.periodoFim = periodoFim;
+    }
 
-    public Long getIdExtrato() { return idExtrato; }
-    public void setIdExtrato(Long idExtrato) { this.idExtrato = idExtrato; }
+    public Instant getDataHoraGeracao() {
+        return dataHoraGeracao;
+    }
 
-    public Instant getDataHoraMov() { return dataHoraMov; }
-    public void setDataHoraMov(Instant dataHoraMov) { this.dataHoraMov = dataHoraMov; }
+    public void setDataHoraGeracao(Instant dataHoraGeracao) {
+        this.dataHoraGeracao = dataHoraGeracao;
+    }
 
-    public Operacao getOperacao() { return operacao; }
-    public void setOperacao(Operacao operacao) { this.operacao = operacao; }
+    public String getNomeUsuario() {
+        return nomeUsuario;
+    }
 
-    public Double getValor() { return valor; }
-    public void setValor(Double valor) { this.valor = valor; }
+    public void setNomeUsuario(String nomeUsuario) {
+        this.nomeUsuario = nomeUsuario;
+    }
 
-    public String getDescricao() { return descricao; }
-    public void setDescricao(String descricao) { this.descricao = descricao; }
+    public String getDescricao() {
+        return descricao;
+    }
 
-    public Conta getConta() { return conta; }
-    public void setConta(Conta conta) { this.conta = conta; }
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
 
-    public Conta getContaDestinatario() { return contaDestinatario; }
-    public void setContaDestinatario(Conta contaDestinatario) { this.contaDestinatario = contaDestinatario; }
+    public int getNumAgencia() {
+        return numAgencia;
+    }
+
+    public void setNumAgencia(int numAgencia) {
+        this.numAgencia = numAgencia;
+    }
+
+    public int getNumConta() {
+        return numConta;
+    }
+
+    public void setNumConta(int numConta) {
+        this.numConta = numConta;
+    }
+
+    public List<TransacaoExtratoDTO> getTransacoes() {
+        return transacoes;
+    }
+
+    public void setTransacoes(List<TransacaoExtratoDTO> transacoes) {
+        this.transacoes = transacoes;
+    }
+
+    public Instant getPeriodoInicio() {
+        return periodoInicio;
+    }
+
+    public void setPeriodoInicio(Instant periodoInicio) {
+        this.periodoInicio = periodoInicio;
+    }
+
+    public Instant getPeriodoFim() {
+        return periodoFim;
+    }
+
+    public void setPeriodoFim(Instant periodoFim) {
+        this.periodoFim = periodoFim;
+    }
 }

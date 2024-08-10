@@ -5,7 +5,7 @@ import com.br.accenture.eBank.ebank.entities.enums.TipoConta;
 
 import java.math.BigDecimal;
 
-public class ContaDTO {
+public class ContaComUsuarioDTO {
 
     private Long idConta;
     private int numeroConta;
@@ -13,29 +13,30 @@ public class ContaDTO {
     private boolean ativa;
     private String chavePix;
     private TipoConta tipoConta;
+    private UsuarioDTO usuario;
 
-    public ContaDTO() {
+    public ContaComUsuarioDTO() {
     }
 
-    public ContaDTO(Conta conta) {
+    public ContaComUsuarioDTO(Conta conta) {
         this.idConta = conta.getIdConta();
         this.numeroConta = conta.getNumeroConta();
         this.saldo = conta.getSaldo();
         this.ativa = conta.isAtiva();
         this.chavePix = conta.getChavePix();
         this.tipoConta = conta.getTipoConta();
-
+        this.usuario = new UsuarioDTO(conta.getUsuario());
     }
 
 
-    public ContaDTO(Long idConta, int numeroConta, BigDecimal saldo, boolean ativa, String chavePix, TipoConta tipoConta) {
+    public ContaComUsuarioDTO(Long idConta, int numeroConta, BigDecimal saldo, boolean ativa, String chavePix, TipoConta tipoConta, UsuarioDTO usuario) {
         this.idConta = idConta;
         this.numeroConta = numeroConta;
         this.saldo = saldo;
         this.ativa = ativa;
         this.chavePix = chavePix;
         this.tipoConta = tipoConta;
-
+        this.usuario = usuario;
     }
 
     public Long getIdConta() {
@@ -86,7 +87,12 @@ public class ContaDTO {
         this.tipoConta = tipoConta;
     }
 
+    public UsuarioDTO getUsuario() {
+        return usuario;
+    }
 
-
+    public void setUsuario(UsuarioDTO usuario) {
+        this.usuario = usuario;
+    }
 
 }
