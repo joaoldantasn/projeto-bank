@@ -1,22 +1,44 @@
-import React, { useState } from "react";
+import React, { useRef, useState, useEffect } from 'react';
 import { Button } from 'primereact/button';
 import { Card } from 'primereact/card';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import { InputText } from 'primereact/inputtext';
 import { Password } from 'primereact/password';
+import { Toast } from 'primereact/toast';
+import TrasacaoService from '../../Services/TrasacaoService';
 
 export default function PainelTransferencia() {
 
     const [senha, setSenha] = useState('');
+    const idContaInicio = 1;
+    const [idContaDestino, setIdContaDestino] = useState('');
+    const [transferencia, setTransferencia] = useState('');
+
+    const toast = useRef(null);
+    const showSuccess = () => {
+        toast.current.show({
+            severity: 'success',
+            summary: 'Enviado com Sucesso!',
+            detail: 'Obrigado',
+            life: 5000
+        });
+    }
+
+    async function submeter() {
+        const contaID = 1
+        TrasacaoService.postTransferir(idContaInicio, idContaDestino, transferencia);
+        showSuccess();
+    }
 
     return (
         <Card >
+            <Toast ref={toast} />
             <Card subTitle='VALOR' >
                 <InputText
                     // className={nomeObrigatorio}
                     style={{ width: '25%' }}
-                // value={nome}
-                // onChange={(e) => setNome(e.target.value)}
+                    value={transferencia}
+                    onChange={(e) => setTransferencia(e.target.value)}
                 />
             </Card>
 
@@ -24,8 +46,8 @@ export default function PainelTransferencia() {
                 <InputText
                     // className={nomeObrigatorio}
                     style={{ width: '25%' }}
-                // value={nome}
-                // onChange={(e) => setNome(e.target.value)}
+                    value={idContaDestino}
+                    onChange={(e) => setIdContaDestino(e.target.value)}
                 />
             </Card>
 
@@ -36,7 +58,7 @@ export default function PainelTransferencia() {
                 </div>
             </Card>
             <Card>
-                <Button className={''} label="ENVIAR" onClick={null} />
+                <Button className={''} label="ENVIAR" onClick={submeter} />
             </Card>
 
         </Card>
