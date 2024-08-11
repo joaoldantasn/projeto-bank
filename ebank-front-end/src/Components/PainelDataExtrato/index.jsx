@@ -11,6 +11,7 @@ export default function PainelDataExtrato() {
     const [dataInicio, setDataInicio] = useState(null);
     const [dataFinal, setDataFinal] = useState(null);
     const [senha, setSenha] = useState('');
+    const id = 1
     const toast = useRef(null);
     const showSuccess = () => {
         toast.current.show({
@@ -23,7 +24,7 @@ export default function PainelDataExtrato() {
 
     async function submeter() {
         const contaID = 1
-        TrasacaoService.getExtrato(dataInicio.toISOString(), dataFinal.toISOString())
+        TrasacaoService.getExtrato(id, dataInicio.toISOString(), dataFinal.toISOString())
         showSuccess();
         // fazer tymount e redirecionar para exibir extrato e um botão de download do mesmo.
     }

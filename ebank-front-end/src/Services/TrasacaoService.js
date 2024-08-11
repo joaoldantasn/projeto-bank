@@ -21,12 +21,12 @@ class TrasacaoService {
 
     postTransferir(contaOrigemId, contaDestinoId, valor) {
 
-        return axios.post('http://localhost:8080/api/transacao/transferir?contaOrigemId' + contaOrigemId + '&contaDestinoId=' + contaDestinoId + '&valor=' + valor, headers);
+        return axios.post('http://localhost:8080/api/transacao/transferir?contaOrigemId=' + contaOrigemId + '&contaDestinoId=' + contaDestinoId + '&valor=' + valor, headers);
     }
 
-    getExtrato(startDate, endDate) {
+    getExtrato(id, startDate, endDate) {
 
-        return axios.get('http://localhost:8080/api/conta/extrato/1?startDate=' + startDate + '&endDate=' + endDate, headers);
+        return axios.get('http://localhost:8080/api/conta/extrato/' + id + '?startDate=' + startDate + '&endDate=' + endDate, headers);
     }
 
 }
