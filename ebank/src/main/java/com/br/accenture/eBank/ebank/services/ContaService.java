@@ -1,14 +1,14 @@
 package com.br.accenture.eBank.ebank.services;
 
-import com.br.accenture.eBank.ebank.dtos.*;
+import com.br.accenture.eBank.ebank.dtos.ContaResponseDTO;
+import com.br.accenture.eBank.ebank.dtos.ExtratoDTO;
+import com.br.accenture.eBank.ebank.dtos.TransacaoExtratoDTO;
 import com.br.accenture.eBank.ebank.entities.Conta;
-import com.br.accenture.eBank.ebank.entities.Usuario;
 import com.br.accenture.eBank.ebank.exceptions.ContaNaoEncontradaException;
 import com.br.accenture.eBank.ebank.repositories.ContaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,60 +27,52 @@ public class ContaService {
 
 
     @Transactional
-    public ContaDTO findById(Long id) {
+    public ContaResponseDTO findById(Long id) {
         Conta resultado = repository.findById(id).orElseThrow(()->  new ContaNaoEncontradaException("Conta não encontrada"));
-        return new ContaDTO(resultado);
+        return new ContaResponseDTO(resultado);
+    }
+
+    @Transactional
+    public ContaResponseDTO findByChavePix(String chave) {
+        Conta resultado = repository.findContaByChavePix(chave).orElseThrow(() -> new ContaNaoEncontradaException("Conta não encontrada"));
+        return new ContaResponseDTO(resultado);
     }
 
     @Transactional(readOnly = true)
-    public Page<ContaDTO> findAll(Pageable pageable) {
+    public Page<ContaResponseDTO> findAll(Pageable pageable) {
         Page<Conta> resultado = repository.findAll(pageable);
-        return resultado.map(ContaDTO::new);
+        return resultado.map(ContaResponseDTO::new);
     }
 
 
     @Transactional
-    public ContaDTO insert(ContaDTO dto) {
+    public ContaResponseDTO insert(ContaResponseDTO dto) {
         Conta entity = new Conta();
         copyDtoToEntity(dto, entity);
 
         entity = repository.save(entity);
 
-        return new ContaDTO(entity);
+        return new ContaResponseDTO(entity);
     }
 
     @Transactional
-    public ContaDTO update(Long id, ContaDTO dto) {
+    public ContaResponseDTO update(Long id, ContaResponseDTO dto) {
         Conta entity = repository.getReferenceById(id);
         copyDtoToEntity(dto, entity);
 
         entity = repository.save(entity);
 
-        return new ContaDTO(entity);
+        return new ContaResponseDTO(entity);
     }
 
     @Transactional
-    public void copyDtoToEntity(ContaDTO dto, Conta entity) {
+    public void copyDtoToEntity(ContaResponseDTO dto, Conta entity) {
         entity.setTipoConta(dto.getTipoConta());
         entity.setNumeroConta(dto.getNumeroConta());
         entity.setChavePix(dto.getChavePix());
         entity.setSaldo(dto.getSaldo());
     }
 
-
-    @Transactional
-    public ContaDTO copyEntityToDto(Conta entity) {
-
-        ContaDTO contaDTO = new ContaDTO();
-        contaDTO.setIdConta(entity.getIdConta());
-        contaDTO.setTipoConta(entity.getTipoConta());
-        contaDTO.setNumeroConta(entity.getNumeroConta());
-        contaDTO.setTipoConta(entity.getTipoConta());
-        contaDTO.setChavePix(entity.getChavePix());
-        contaDTO.setSaldo(entity.getSaldo());
-
-        return contaDTO;
-    }
 
     @Transactional
     public void delete(Long id) {
@@ -94,19 +86,9 @@ public class ContaService {
 
         List<TransacaoExtratoDTO> transacoes = transacaoService.buscarTransacoesPorPeriodo(conta, startDate, endDate);
 
-        ExtratoDTO extrato = new ExtratoDTO();
-        extrato.setNomeUsuario(conta.getUsuario().getNomeUsuario());
-        extrato.setNumAgencia(conta.getUsuario().getAgencia().getCodAgencia());
-        extrato.setNumConta(conta.getNumeroConta());
-        extrato.setTransacoes(transacoes);
-        extrato.setDataHoraGeracao(new Date().toInstant());
-        extrato.setPeriodoInicio(startDate);
-        extrato.setPeriodoFim(endDate);
-        extrato.setDescricao("Extrato");
+        ExtratoDTO extrato = new ExtratoDTO(new Date().toInstant(), conta.getUsuario().getNomeUsuario(), "Extrato",
+                conta.getUsuario().getAgencia().getCodAgencia(), conta.getNumeroConta(), transacoes, startDate, endDate);
 
         return extrato;
     }
-
-
-
 }

@@ -1,6 +1,6 @@
 package com.br.accenture.eBank.ebank.controllers;
 
-import com.br.accenture.eBank.ebank.dtos.ContaDTO;
+import com.br.accenture.eBank.ebank.dtos.ContaResponseDTO;
 import com.br.accenture.eBank.ebank.dtos.ExtratoDTO;
 import com.br.accenture.eBank.ebank.services.ContaService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,27 +22,33 @@ public class ContaController {
 
 
     @GetMapping
-    public ResponseEntity<Page<ContaDTO>> findAll(Pageable pageable) {
-        Page<ContaDTO> dto = service.findAll(pageable);
+    public ResponseEntity<Page<ContaResponseDTO>> findAll(Pageable pageable) {
+        Page<ContaResponseDTO> dto = service.findAll(pageable);
         return ResponseEntity.ok(dto);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ContaDTO> getById(@PathVariable Long id) {
-        ContaDTO dto = service.findById(id);
+    public ResponseEntity<ContaResponseDTO> getById(@PathVariable Long id) {
+        ContaResponseDTO dto = service.findById(id);
+        return ResponseEntity.ok(dto);
+    }
+
+    @GetMapping("/pix")
+    public ResponseEntity<ContaResponseDTO> getByChavePix(@RequestParam String chave) {
+        ContaResponseDTO dto = service.findByChavePix(chave);
         return ResponseEntity.ok(dto);
     }
 
     @PostMapping
-    public ResponseEntity<ContaDTO> insert(@RequestBody ContaDTO dto) {
+    public ResponseEntity<ContaResponseDTO> insert(@RequestBody ContaResponseDTO dto) {
         dto = service.insert(dto);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
-                .buildAndExpand(dto.getIdConta()).toUri();
+                .buildAndExpand(dto).toUri();
         return ResponseEntity.created(uri).body(dto);
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<ContaDTO> update(@PathVariable Long id, @RequestBody ContaDTO dto) {
+    public ResponseEntity<ContaResponseDTO> update(@PathVariable Long id, @RequestBody ContaResponseDTO dto) {
         dto = service.update(id, dto);
         return ResponseEntity.ok(dto);
     }
@@ -63,6 +69,4 @@ public class ContaController {
 
         return ResponseEntity.ok(extrato);
     }
-
-
 }

@@ -1,7 +1,6 @@
 package com.br.accenture.eBank.ebank.services;
 
-import com.br.accenture.eBank.ebank.dtos.ContaDTO;
-import com.br.accenture.eBank.ebank.dtos.TransacaoDTO;
+import com.br.accenture.eBank.ebank.dtos.ContaResponseDTO;
 import com.br.accenture.eBank.ebank.dtos.TransacaoExtratoDTO;
 import com.br.accenture.eBank.ebank.entities.Conta;
 import com.br.accenture.eBank.ebank.entities.Transacao;
@@ -89,6 +88,33 @@ public class TransacaoService {
         transacaoRepository.save(transacao);
     }
 
+    public void transferirViaPix(Long contaOrigemId, String chavePix, BigDecimal valor) {
+        System.out.println(chavePix);
+        Conta contaOrigem = contaRepository.findById(contaOrigemId)
+                .orElseThrow(() -> new ContaNaoEncontradaException("Conta de origem não encontrada"));
+        Conta contaDestino = contaRepository.findContaByChavePix(chavePix)
+                .orElseThrow(() -> new ContaNaoEncontradaException("Conta de destino não encontrada"));
+
+        if (contaOrigem.getSaldo().compareTo(valor) < 0) {
+            throw new SaldoInsuficienteException(valor);
+        }
+
+        contaOrigem.setSaldo(contaOrigem.getSaldo().subtract(valor));
+        contaDestino.setSaldo(contaDestino.getSaldo().add(valor));
+        contaRepository.save(contaOrigem);
+        contaRepository.save(contaDestino);
+
+        Transacao transacao = new Transacao();
+        transacao.setConta(contaOrigem);
+        transacao.setContaDestinatario(contaDestino);
+        transacao.setDataHora(Instant.now());
+        transacao.setValor(valor.negate());
+        transacao.setDescricao("Transferência via Pix ");
+        transacao.setTipo(Operacao.TRANSFERENCIA);
+
+        transacaoRepository.save(transacao);
+    }
+
     public List<TransacaoExtratoDTO> buscarTransacoesPorPeriodo(Conta conta, Instant startDate, Instant endDate) {
         return copyEntitiesToDtos(transacaoRepository.findByContaAndDataHoraBetween(conta, startDate, endDate));
     }
@@ -103,7 +129,7 @@ public class TransacaoService {
             dto.setValor(transacao.getValor());
             dto.setDescricao(transacao.getDescricao());
             if (transacao.getContaDestinatario() != null) {
-                dto.setContaDestinatario(new ContaDTO(transacao.getContaDestinatario()));
+                dto.setContaDestinatario(new ContaResponseDTO(transacao.getContaDestinatario()));
             }
 
             return dto;

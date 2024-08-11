@@ -52,4 +52,16 @@ public class TransacaoController {
         }
     }
 
+    @PostMapping("/transferir/pix")
+    public ResponseEntity<String> transferirViaPix(@RequestParam("contaOrigemId") Long contaOrigemId,
+                                             @RequestParam("chavePix") String chavePix,
+                                             @RequestParam("valor") BigDecimal valor) {
+        try {
+            transacaoService.transferirViaPix(contaOrigemId, chavePix, valor);
+            return ResponseEntity.ok("Transferência realizada com sucesso.");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Erro ao realizar transferência: " + e.getMessage());
+        }
+    }
+
 }
