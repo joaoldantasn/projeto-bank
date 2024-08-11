@@ -87,5 +87,9 @@ public class Agencia {
 		return usuarios;
 	}
 
-
+	public void setUsuarios(Set<Usuario> usuarios) {
+		this.usuarios = usuarios;
+	}
+	
+	
 }
