@@ -38,6 +38,8 @@ public class SecurityConfigurations {
                         .requestMatchers(HttpMethod.DELETE,"/api/conta/{id}").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.PUT,"/api/conta/{id}").hasRole("ADMIN")
                         .requestMatchers("/h2-console/**").permitAll()
+                        .requestMatchers("/v3/api-docs/**").permitAll() // Permite docs do Swagger
+                        .requestMatchers("/swagger-ui/**").permitAll() // Permite UI do Swagger
                         .anyRequest().authenticated()
                 ).headers(headers -> headers
                         .frameOptions().sameOrigin() // Permite que o H2 Console seja carregado em um frame
