@@ -29,6 +29,11 @@ class TrasacaoService {
         return axios.get('http://localhost:8080/api/conta/extrato/' + id + '?startDate=' + startDate + '&endDate=' + endDate, headers);
     }
 
+    postTransferirPix(contaOrigemId, chavePix, valor) {
+
+        return axios.post('http://localhost:8080/api/transacao/transferir/pix?contaOrigemId=' + contaOrigemId + '&chavePix=' + chavePix + '&valor=' + valor, headers);
+    }
+
 }
 
 export default new TrasacaoService();

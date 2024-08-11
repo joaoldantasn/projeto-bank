@@ -10,6 +10,7 @@ import PainelDataExtrato from '../PainelDataExtrato';
 import AppToolbar from '../AppToolbar';
 import SaldoToolbar from '../SaldoToolbar';
 import NomeToolbar from '../NomeToolbar';
+import PainelTransferenciaPix from '../PainelTransferenciaPix';
 
 export default function TabViewCliente(props) {
 
@@ -37,6 +38,9 @@ export default function TabViewCliente(props) {
                         </TabPanel>
                         <TabPanel header="TRANSFERÊNCIA">
                             <PainelTransferencia></PainelTransferencia>
+                        </TabPanel>
+                        <TabPanel header="PIX">
+                            <PainelTransferenciaPix></PainelTransferenciaPix>
                         </TabPanel>
 
                     </TabView>
