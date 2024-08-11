@@ -33,21 +33,43 @@ public class UsuarioDTO {
 		return idUsuario;
 	}
 
+	public void setIdUsuario(Long idUsuario) {
+		this.idUsuario = idUsuario;
+	}
+
 	public String getCpf() {
 		return cpf;
+	}
+
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
 	}
 
 	public String getNomeUsuario() {
 		return nomeUsuario;
 	}
 
+	public void setNomeUsuario(String nomeUsuario) {
+		this.nomeUsuario = nomeUsuario;
+	}
+
 	public String getTelefone() {
 		return telefone;
+	}
+
+	public void setTelefone(String telefone) {
+		this.telefone = telefone;
 	}
 
 	public String getSenha() {
 		return senha;
 	}
 
+	public void setSenha(String senha) {
+		this.senha = senha;
+	}
+
+	
+	
 
 }

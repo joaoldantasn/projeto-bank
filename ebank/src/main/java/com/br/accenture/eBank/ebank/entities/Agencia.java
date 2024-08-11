@@ -4,15 +4,18 @@ import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.MapsId;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 
 @Entity
 @Table(name = "tb_agencia")
@@ -21,17 +24,20 @@ public class Agencia {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long idAgencia;
+	@NotNull(message = "O código da agência não pode ser nulo")
 	private int codAgencia;
+	@NotBlank(message = "O telefone não pode estar em branco")
+	@Pattern(regexp = "\\d{10,11}", message = "O telefone deve conter 10 ou 11 dígitos numéricos")
 	private String telefone;
 	
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
 	@JoinColumn(name="endereco_id")
-	@MapsId
 	@JsonManagedReference
 	private Endereco endereco;
 
-	@OneToMany(mappedBy = "agencia")
-	private Set<Usuario>usuarios = new HashSet<>();
+	@OneToMany(mappedBy = "agencia", cascade = CascadeType.ALL, orphanRemoval = true)
+	@JsonManagedReference
+	private Set<Usuario> usuarios = new HashSet<>();
 
 	public Agencia() {
 
@@ -43,6 +49,7 @@ public class Agencia {
 		this.telefone = telefone;
 		this.endereco = endereco;
 	}
+	
 
 	public Long getIdAgencia() {
 		return idAgencia;
@@ -80,5 +87,9 @@ public class Agencia {
 		return usuarios;
 	}
 
-
+	public void setUsuarios(Set<Usuario> usuarios) {
+		this.usuarios = usuarios;
+	}
+	
+	
 }

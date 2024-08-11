@@ -1,21 +1,15 @@
 package com.br.accenture.eBank.ebank.entities;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Objects;
 
 import com.br.accenture.eBank.ebank.entities.enums.TipoConta;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PositiveOrZero;
 
 @Entity
 @Table(name = "tb_conta")
@@ -24,6 +18,8 @@ public class Conta {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long idConta;
+	@NotNull(message = "O número da conta não pode ser nulo")
+    @PositiveOrZero(message = "O número da conta deve ser positivo ou zero")
 	private int numeroConta;
 	private BigDecimal saldo;
 	private boolean ativa;
@@ -33,19 +29,24 @@ public class Conta {
 	
 	@ManyToOne
 	@JoinColumn(name = "usuario_id")
+	@JsonIgnore
 	private Usuario usuario;
-	
-	@OneToOne(mappedBy = "conta", cascade = CascadeType.ALL, orphanRemoval = true)
-	private Extrato extrato;
-	
+
 	public Conta() {
 		
 	}
 	
-	
+    public Conta(Long idConta, int numeroConta, BigDecimal saldo, Boolean ativa, String chavePix, TipoConta tipoConta) {
+        this.idConta = idConta;
+        this.numeroConta = numeroConta;
+        this.saldo = saldo;
+        this.ativa = ativa;
+        this.chavePix = chavePix;
+        this.tipoConta = tipoConta;
+    }
 
 	public Conta(Long idConta, int numeroConta, BigDecimal saldo, boolean ativa, String chavePix, TipoConta tipoConta,
-			Usuario usuario, Extrato extrato) {
+			Usuario usuario) {
 		this.idConta = idConta;
 		this.numeroConta = numeroConta;
 		this.saldo = saldo;
@@ -53,7 +54,7 @@ public class Conta {
 		this.chavePix = chavePix;
 		this.tipoConta = tipoConta;
 		this.usuario = usuario;
-		this.extrato = extrato;
+
 	}
 
 

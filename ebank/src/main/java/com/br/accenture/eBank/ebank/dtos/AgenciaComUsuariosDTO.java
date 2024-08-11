@@ -13,14 +13,14 @@ public class AgenciaComUsuariosDTO {
 	private int codAgencia;
 	private Endereco endereco;
 	private String telefone;
-	private Set<UsuarioDTO> usuarios = new HashSet<>();
+	private Set<UsuarioEContaDTO> usuarios = new HashSet<>();
 	
 	public AgenciaComUsuariosDTO() {
 		
 	}
 
 	public AgenciaComUsuariosDTO(Long idAgencia, int codAgencia, Endereco endereco, String telefone,
-			Set<UsuarioDTO> usuarios) {
+			Set<UsuarioEContaDTO> usuarios) {
 		super();
 		this.idAgencia = idAgencia;
 		this.codAgencia = codAgencia;
@@ -34,29 +34,49 @@ public class AgenciaComUsuariosDTO {
 		codAgencia = entity.getCodAgencia();
 		endereco = entity.getEndereco();
 		telefone = entity.getTelefone();
-		usuarios = entity.getUsuarios().stream().map(UsuarioDTO::new).collect(Collectors.toSet());
+		usuarios = entity.getUsuarios().stream().map(UsuarioEContaDTO::new).collect(Collectors.toSet());
 	}
 
 	public Long getIdAgencia() {
 		return idAgencia;
 	}
 
+	public void setIdAgencia(Long idAgencia) {
+		this.idAgencia = idAgencia;
+	}
+
 	public int getCodAgencia() {
 		return codAgencia;
+	}
+
+	public void setCodAgencia(int codAgencia) {
+		this.codAgencia = codAgencia;
 	}
 
 	public Endereco getEndereco() {
 		return endereco;
 	}
 
+	public void setEndereco(Endereco endereco) {
+		this.endereco = endereco;
+	}
+
 	public String getTelefone() {
 		return telefone;
 	}
 
+	public void setTelefone(String telefone) {
+		this.telefone = telefone;
+	}
 
-	public Set<UsuarioDTO> getUsuarios() {
+	public Set<UsuarioEContaDTO> getUsuarios() {
 		return usuarios;
 	}
+
+	public void setUsuarios(Set<UsuarioEContaDTO> usuarios) {
+		this.usuarios = usuarios;
+	}
+
 	
 	
 
