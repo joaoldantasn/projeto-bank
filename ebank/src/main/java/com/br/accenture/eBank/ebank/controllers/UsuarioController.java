@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.br.accenture.eBank.ebank.dtos.UsuarioContaDTO;
-import com.br.accenture.eBank.ebank.dtos.UsuarioDTO;
+import com.br.accenture.eBank.ebank.dtos.UsuarioPutDTO;
 import com.br.accenture.eBank.ebank.services.UsuarioService;
 
 import jakarta.validation.Valid;
@@ -33,7 +33,7 @@ public class UsuarioController {
 
 	@PutMapping(value = "/atualizar/{id}")
 	@PreAuthorize("#id == principal.idUsuario")
-	public ResponseEntity<UsuarioDTO> update(@PathVariable Long id, @Valid @RequestBody UsuarioDTO dto) {
+	public ResponseEntity<UsuarioPutDTO> update(@PathVariable Long id, @Valid @RequestBody UsuarioPutDTO dto) {
 		dto = service.update(id, dto);
 		return ResponseEntity.ok(dto);
 	}

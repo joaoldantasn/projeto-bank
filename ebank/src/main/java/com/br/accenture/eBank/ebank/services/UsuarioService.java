@@ -4,21 +4,25 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-import java.util.stream.Collectors;
 
-import com.br.accenture.eBank.ebank.entities.Conta;
-import com.br.accenture.eBank.ebank.entities.Transacao;
-import com.br.accenture.eBank.ebank.exceptions.ContaNaoEncontradaException;
-import com.br.accenture.eBank.ebank.repositories.TransacaoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.br.accenture.eBank.ebank.dtos.UsuarioContaDTO;
-import com.br.accenture.eBank.ebank.dtos.UsuarioDTO;
+import com.br.accenture.eBank.ebank.dtos.UsuarioPutDTO;
+import com.br.accenture.eBank.ebank.entities.Conta;
+import com.br.accenture.eBank.ebank.entities.Endereco;
+import com.br.accenture.eBank.ebank.entities.Transacao;
 import com.br.accenture.eBank.ebank.entities.Usuario;
+import com.br.accenture.eBank.ebank.exceptions.ContaNaoEncontradaException;
+import com.br.accenture.eBank.ebank.repositories.EnderecoRepository;
+import com.br.accenture.eBank.ebank.repositories.TransacaoRepository;
 import com.br.accenture.eBank.ebank.repositories.UsuarioRepository;
+
+import jakarta.persistence.EntityNotFoundException;
 
 @Service
 public class UsuarioService {
@@ -28,7 +32,13 @@ public class UsuarioService {
 
 	@Autowired
 	private TransacaoRepository transacaoRepository;
-
+	
+	@Autowired
+	private EnderecoRepository enderecoRepository;
+	
+	@Autowired
+    private PasswordEncoder passwordEncoder;
+	
 	@Transactional(readOnly = true)
 	public UsuarioContaDTO findById(Long id) {
 		Optional<Usuario> resultado = repository.findById(id);
@@ -38,21 +48,43 @@ public class UsuarioService {
 	}
 
 	@Transactional
-	public UsuarioDTO update(Long id, UsuarioDTO dto) {
-		Usuario entity = repository.getReferenceById(id);
-		copyDtoToEntity(dto, entity);
+	public UsuarioPutDTO update(Long id, UsuarioPutDTO dto) {
+	    Usuario entity = repository.getReferenceById(id);
 
-		entity = repository.save(entity);
+	    // Atualiza o usuário com os dados do DTO
+	    copyDtoToEntity(dto, entity);
 
-		return new UsuarioDTO(entity);
+	    // Salva as alterações do usuário
+	    entity = repository.save(entity);
+
+	    return new UsuarioPutDTO(entity);
 	}
 
 	@Transactional
-	private void copyDtoToEntity(UsuarioDTO dto, Usuario entity) {
-		entity.setCpf(dto.getCpf());
-		entity.setNomeUsuario(dto.getNomeUsuario());
-		entity.setTelefone(dto.getTelefone());
-		entity.setSenha(dto.getSenha());
+	private void copyDtoToEntity(UsuarioPutDTO dto, Usuario entity) {
+	    
+	    entity.setCpf(dto.getCpf());
+	    entity.setNomeUsuario(dto.getNomeUsuario());
+	    entity.setTelefone(dto.getTelefone());
+
+	    
+	    if (dto.getSenha() != null && !dto.getSenha().isEmpty()) {
+	        entity.setSenha(passwordEncoder.encode(dto.getSenha()));
+	    }
+
+	    
+	    if (dto.getEndereco() != null) {
+	        Endereco endereco = dto.getEndereco();
+	        if (endereco.getIdEndereco() == null) {
+	           
+	            endereco = enderecoRepository.save(endereco);
+	        } else {
+	            
+	            endereco = enderecoRepository.findById(endereco.getIdEndereco())
+	                            .orElseThrow(() -> new EntityNotFoundException("Endereco não encontrado"));
+	        }
+	        entity.setEndereco(endereco);
+	    }
 	}
 
 	@Transactional

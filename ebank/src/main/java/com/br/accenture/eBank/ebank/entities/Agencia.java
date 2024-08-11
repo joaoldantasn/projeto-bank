@@ -38,6 +38,8 @@ public class Agencia {
 	@OneToMany(mappedBy = "agencia", cascade = CascadeType.ALL, orphanRemoval = true)
 	@JsonManagedReference
 	private Set<Usuario> usuarios = new HashSet<>();
+	
+	
 
 	public Agencia() {
 
