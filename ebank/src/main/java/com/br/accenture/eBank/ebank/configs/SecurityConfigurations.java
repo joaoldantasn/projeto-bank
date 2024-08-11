@@ -33,6 +33,10 @@ public class SecurityConfigurations {
                         .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/register").hasRole("ADMIN")
                         .requestMatchers("/api/agencias/**").hasRole("ADMIN")
+                        .requestMatchers("/api/transacao/**").authenticated()
+                        .requestMatchers(HttpMethod.GET,"/api/conta").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE,"/api/conta/{id}").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.PUT,"/api/conta/{id}").hasRole("ADMIN")
                         .requestMatchers("/h2-console/**").permitAll()
                         .anyRequest().authenticated()
                 ).headers(headers -> headers

@@ -41,13 +41,12 @@ INSERT INTO tb_conta (numero_conta, saldo, ativa, chave_pix, tipo_conta, usuario
 INSERT INTO tb_conta (numero_conta, saldo, ativa, chave_pix, tipo_conta, usuario_id) VALUES (109876, 5000.25, TRUE, 'bruno.oliveira@pix.com', 'POUPANCA', 9);
 INSERT INTO tb_conta (numero_conta, saldo, ativa, chave_pix, tipo_conta, usuario_id) VALUES (987654, 5500.50, TRUE, 'patricia.moreira@pix.com', 'CORRENTE', 10);
 
--- Inserir Extratos
-INSERT INTO tb_extrato (data_hora_mov, operacao, conta_id) VALUES ('2023-08-01 10:00:00', 'DEPOSITO', 1);
-INSERT INTO tb_extrato (data_hora_mov, operacao, conta_id) VALUES ('2023-08-02 11:00:00', 'SAQUE', 2);
-INSERT INTO tb_extrato (data_hora_mov, operacao, conta_id) VALUES ('2023-08-03 12:00:00', 'TRANSFERENCIA', 3);
-INSERT INTO tb_extrato (data_hora_mov, operacao, conta_id) VALUES ('2023-08-04 13:00:00', 'DEPOSITO', 4);
-INSERT INTO tb_extrato (data_hora_mov, operacao, conta_id) VALUES ('2023-08-05 14:00:00', 'SAQUE', 5);
-INSERT INTO tb_extrato (data_hora_mov, operacao, conta_id) VALUES ('2023-08-06 15:00:00', 'TRANSFERENCIA', 6);
-INSERT INTO tb_extrato (data_hora_mov, operacao, conta_id) VALUES ('2023-08-07 16:00:00', 'DEPOSITO', 7);
-INSERT INTO tb_extrato (data_hora_mov, operacao, conta_id) VALUES ('2023-08-08 17:00:00', 'SAQUE', 8);
-INSERT INTO tb_extrato (data_hora_mov, operacao, conta_id) VALUES ('2023-08-09 18:00:00', 'TRANSFERENCIA', 9);
+-- Inserir Transações
+INSERT INTO tb_transacao (conta_origem_id, conta_destino_id, valor, tipo, data_hora) VALUES (1, 2, 150.00, 'TRANSFERENCIA', '2023-08-01T10:00:00Z');
+INSERT INTO tb_transacao (conta_origem_id, conta_destino_id, valor, tipo, data_hora) VALUES (2, 3, 200.00, 'TRANSFERENCIA', '2023-08-02T11:00:00Z');
+INSERT INTO tb_transacao (conta_origem_id, conta_destino_id, valor, tipo, data_hora) VALUES (3, 4, 250.00, 'TRANSFERENCIA', '2023-08-03T12:00:00Z');
+INSERT INTO tb_transacao (conta_origem_id, conta_destino_id, valor, tipo, data_hora) VALUES (4, 5, 300.00, 'TRANSFERENCIA', '2023-08-04T13:00:00Z');
+INSERT INTO tb_transacao (conta_origem_id, conta_destino_id, valor, tipo, data_hora) VALUES (5, 6, 350.00, 'TRANSFERENCIA', '2023-08-05T14:00:00Z');
+INSERT INTO tb_transacao (conta_origem_id, conta_destino_id, valor, tipo, data_hora) VALUES (6, 7, 400.00, 'TRANSFERENCIA', '2023-08-06T15:00:00Z');
+INSERT INTO tb_transacao (conta_origem_id, conta_destino_id, valor, tipo, data_hora) VALUES (7, 8, 450.00, 'TRANSFERENCIA', '2023-08-07T16:00:00Z');
+INSERT INTO tb_transacao (conta_origem_id, conta_destino_id, valor, tipo, data_hora) VALUES (8, 9, 500.00, 'TRANSFERENCIA', '2023-08-08T17:00:00Z');

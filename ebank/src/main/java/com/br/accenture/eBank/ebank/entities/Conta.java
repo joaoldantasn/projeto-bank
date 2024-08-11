@@ -1,22 +1,13 @@
 package com.br.accenture.eBank.ebank.entities;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Objects;
 
 import com.br.accenture.eBank.ebank.entities.enums.TipoConta;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PositiveOrZero;
 
@@ -40,10 +31,7 @@ public class Conta {
 	@JoinColumn(name = "usuario_id")
 	@JsonIgnore
 	private Usuario usuario;
-	
-	@OneToOne(mappedBy = "conta", cascade = CascadeType.ALL, orphanRemoval = true)
-	private Extrato extrato;
-	
+
 	public Conta() {
 		
 	}
@@ -58,7 +46,7 @@ public class Conta {
     }
 
 	public Conta(Long idConta, int numeroConta, BigDecimal saldo, boolean ativa, String chavePix, TipoConta tipoConta,
-			Usuario usuario, Extrato extrato) {
+			Usuario usuario) {
 		this.idConta = idConta;
 		this.numeroConta = numeroConta;
 		this.saldo = saldo;
@@ -66,7 +54,7 @@ public class Conta {
 		this.chavePix = chavePix;
 		this.tipoConta = tipoConta;
 		this.usuario = usuario;
-		this.extrato = extrato;
+
 	}
 
 
