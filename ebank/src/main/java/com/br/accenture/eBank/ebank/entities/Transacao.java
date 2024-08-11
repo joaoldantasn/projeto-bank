@@ -24,8 +24,6 @@ public class Transacao {
 
     private BigDecimal valor;
 
-    private String descricao;
-
     @ManyToOne
     @JoinColumn(name = "conta_origem_id")
     private Conta conta;
@@ -35,15 +33,13 @@ public class Transacao {
     private Conta contaDestinatario;
 
 
-
     public Transacao() {
     }
 
-    public Transacao(Long idTransacao, Instant dataHora, BigDecimal valor, String descricao, Conta conta, Conta contaDestinatario) {
+    public Transacao(Long idTransacao, Instant dataHora, BigDecimal valor, Conta conta, Conta contaDestinatario) {
         this.id = idTransacao;
         this.dataHora = dataHora;
         this.valor = valor;
-        this.descricao = descricao;
         this.conta = conta;
         this.contaDestinatario = contaDestinatario;
     }
@@ -80,13 +76,7 @@ public class Transacao {
         this.valor = valor;
     }
 
-    public String getDescricao() {
-        return descricao;
-    }
 
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
-    }
 
     public Conta getConta() {
         return conta;

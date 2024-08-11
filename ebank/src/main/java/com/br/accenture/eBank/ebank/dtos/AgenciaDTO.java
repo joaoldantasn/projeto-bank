@@ -31,20 +31,46 @@ public class AgenciaDTO {
 		telefone = entity.getTelefone();
 	}
 
+
 	public Long getIdAgencia() {
 		return idAgencia;
 	}
 
+
+	public void setIdAgencia(Long idAgencia) {
+		this.idAgencia = idAgencia;
+	}
+
+
 	public int getCodAgencia() {
 		return codAgencia;
 	}
-	
+
+
+	public void setCodAgencia(int codAgencia) {
+		this.codAgencia = codAgencia;
+	}
+
+
 	public Endereco getEndereco() {
 		return endereco;
 	}
 
+
+	public void setEndereco(Endereco endereco) {
+		this.endereco = endereco;
+	}
+
+
 	public String getTelefone() {
 		return telefone;
 	}
+
+
+	public void setTelefone(String telefone) {
+		this.telefone = telefone;
+	}
+
+	
 	
 }

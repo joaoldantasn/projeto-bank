@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -28,6 +29,7 @@ public class ContaController {
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("#id == principal.idUsuario")
     public ResponseEntity<ContaResponseDTO> getById(@PathVariable Long id) {
         ContaResponseDTO dto = service.findById(id);
         return ResponseEntity.ok(dto);
@@ -48,6 +50,7 @@ public class ContaController {
     }
 
     @PutMapping(value = "/{id}")
+    @PreAuthorize("#id == principal.idUsuario")
     public ResponseEntity<ContaResponseDTO> update(@PathVariable Long id, @RequestBody ContaResponseDTO dto) {
         dto = service.update(id, dto);
         return ResponseEntity.ok(dto);
@@ -59,13 +62,14 @@ public class ContaController {
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping("/extrato/{contaId}")
+    @GetMapping("/extrato/{id}")
+    @PreAuthorize("#id == principal.idUsuario")
     public ResponseEntity<ExtratoDTO> getExtrato(
-            @PathVariable("contaId") Long contaId,
+            @PathVariable Long id,
             @RequestParam("startDate") Instant startDate,
             @RequestParam("endDate") Instant endDate) {
 
-        ExtratoDTO extrato = service.getExtrato(contaId, startDate, endDate);
+        ExtratoDTO extrato = service.getExtrato(id, startDate, endDate);
 
         return ResponseEntity.ok(extrato);
     }

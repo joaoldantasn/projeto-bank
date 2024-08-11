@@ -17,7 +17,6 @@ public class TransacaoDTO {
     private Instant dataHora;
     private Operacao tipo;
     private BigDecimal valor;
-    private String descricao;
     private ContaResponseDTO conta;
     private ContaResponseDTO contaDestinatario;
 

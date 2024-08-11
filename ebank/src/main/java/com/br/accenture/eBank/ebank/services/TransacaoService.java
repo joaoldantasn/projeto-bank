@@ -40,7 +40,6 @@ public class TransacaoService {
         transacao.setDataHora(Instant.now());
         transacao.setValor(valor.negate());
         transacao.setTipo(Operacao.SAQUE);
-        transacao.setDescricao("Saque realizado");
 
         transacaoRepository.save(transacao);
     }
@@ -57,7 +56,6 @@ public class TransacaoService {
         transacao.setDataHora(Instant.now());
         transacao.setValor(valor);
         transacao.setTipo(Operacao.DEPOSITO);
-        transacao.setDescricao("Depósito realizado");
 
         transacaoRepository.save(transacao);
     }
@@ -82,7 +80,6 @@ public class TransacaoService {
         transacao.setContaDestinatario(contaDestino);
         transacao.setDataHora(Instant.now());
         transacao.setValor(valor.negate());
-        transacao.setDescricao("Transferência para conta " + contaDestinoId);
         transacao.setTipo(Operacao.TRANSFERENCIA);
 
         transacaoRepository.save(transacao);
@@ -109,7 +106,6 @@ public class TransacaoService {
         transacao.setContaDestinatario(contaDestino);
         transacao.setDataHora(Instant.now());
         transacao.setValor(valor.negate());
-        transacao.setDescricao("Transferência via Pix ");
         transacao.setTipo(Operacao.TRANSFERENCIA);
 
         transacaoRepository.save(transacao);
@@ -127,7 +123,6 @@ public class TransacaoService {
             dto.setDataHora(transacao.getDataHora());
             dto.setTipo(transacao.getTipo());
             dto.setValor(transacao.getValor());
-            dto.setDescricao(transacao.getDescricao());
             if (transacao.getContaDestinatario() != null) {
                 dto.setContaDestinatario(new ContaResponseDTO(transacao.getContaDestinatario()));
             }

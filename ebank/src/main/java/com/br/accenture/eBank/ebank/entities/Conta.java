@@ -1,12 +1,15 @@
 package com.br.accenture.eBank.ebank.entities;
 
-import com.br.accenture.eBank.ebank.entities.enums.TipoConta;
-import jakarta.persistence.*;
-
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Objects;
-import java.util.Set;
+
+import com.br.accenture.eBank.ebank.entities.enums.TipoConta;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PositiveOrZero;
 
 @Entity
 @Table(name = "tb_conta")
@@ -15,31 +18,35 @@ public class Conta {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long idConta;
+	@NotNull(message = "O número da conta não pode ser nulo")
+    @PositiveOrZero(message = "O número da conta deve ser positivo ou zero")
 	private int numeroConta;
 	private BigDecimal saldo;
 	private boolean ativa;
 	private String chavePix;
 	@Enumerated(EnumType.STRING)  // Mapeia o enum como um valor ordinal (número)
 	private TipoConta tipoConta;
-
+	
 	@ManyToOne
 	@JoinColumn(name = "usuario_id")
+	@JsonIgnore
 	private Usuario usuario;
 
-
-	@OneToMany(mappedBy = "conta", cascade = CascadeType.ALL, orphanRemoval = true)
-	private List<Transacao> transacoes;
-
-
 	public Conta() {
-
-
+		
+	}
+	
+    public Conta(Long idConta, int numeroConta, BigDecimal saldo, Boolean ativa, String chavePix, TipoConta tipoConta) {
+        this.idConta = idConta;
+        this.numeroConta = numeroConta;
+        this.saldo = saldo;
+        this.ativa = ativa;
+        this.chavePix = chavePix;
+        this.tipoConta = tipoConta;
     }
 
-
-
 	public Conta(Long idConta, int numeroConta, BigDecimal saldo, boolean ativa, String chavePix, TipoConta tipoConta,
-                 Usuario usuario, List<Transacao> transacoes) {
+			Usuario usuario) {
 		this.idConta = idConta;
 		this.numeroConta = numeroConta;
 		this.saldo = saldo;
@@ -47,8 +54,8 @@ public class Conta {
 		this.chavePix = chavePix;
 		this.tipoConta = tipoConta;
 		this.usuario = usuario;
-        this.transacoes = transacoes;
-    }
+
+	}
 
 
 
@@ -107,7 +114,6 @@ public class Conta {
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
 	}
-
 
 	@Override
 	public int hashCode() {

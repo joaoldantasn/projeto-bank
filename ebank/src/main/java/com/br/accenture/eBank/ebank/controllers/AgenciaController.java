@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,8 +19,10 @@ import com.br.accenture.eBank.ebank.dtos.AgenciaComUsuariosDTO;
 import com.br.accenture.eBank.ebank.dtos.AgenciaDTO;
 import com.br.accenture.eBank.ebank.services.AgenciaService;
 
+import jakarta.validation.Valid;
+
 @RestController
-@RequestMapping(value = "/agencias")
+@RequestMapping(value = "/api/agencias")
 public class AgenciaController {
 
 	@Autowired
@@ -39,21 +40,15 @@ public class AgenciaController {
 		return ResponseEntity.ok(dto);
 	}
 	
-	@PostMapping
-	public ResponseEntity<AgenciaDTO> insert(@RequestBody AgenciaDTO dto) {
+	@PostMapping(value = "/adicionar")
+	public ResponseEntity<AgenciaDTO> insert(@Valid @RequestBody AgenciaDTO dto) {
 		dto = service.insert(dto);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
 				.buildAndExpand(dto.getIdAgencia()).toUri();
 		return ResponseEntity.created(uri).body(dto);
 	}
 	
-	@PutMapping(value = "/{id}")
-	public ResponseEntity<AgenciaDTO> update(@PathVariable Long id, @RequestBody AgenciaDTO dto) {
-		dto = service.update(id, dto);
-		return ResponseEntity.ok(dto);
-	}
-	
-	@DeleteMapping(value = "/{id}")
+	@DeleteMapping(value = "/deletar/{id}")
 	public ResponseEntity<Void> delete(@PathVariable Long id) {
 		service.delete(id);
 		return ResponseEntity.noContent().build();
