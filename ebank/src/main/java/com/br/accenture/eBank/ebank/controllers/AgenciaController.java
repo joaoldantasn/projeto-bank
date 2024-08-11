@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,6 +18,8 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.br.accenture.eBank.ebank.dtos.AgenciaComUsuariosDTO;
 import com.br.accenture.eBank.ebank.dtos.AgenciaDTO;
 import com.br.accenture.eBank.ebank.services.AgenciaService;
+
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping(value = "/api/agencias")
@@ -40,7 +41,7 @@ public class AgenciaController {
 	}
 	
 	@PostMapping(value = "/adicionar")
-	public ResponseEntity<AgenciaDTO> insert(@RequestBody AgenciaDTO dto) {
+	public ResponseEntity<AgenciaDTO> insert(@Valid @RequestBody AgenciaDTO dto) {
 		dto = service.insert(dto);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
 				.buildAndExpand(dto.getIdAgencia()).toUri();

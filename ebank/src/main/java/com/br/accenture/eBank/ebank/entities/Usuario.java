@@ -21,6 +21,8 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 import lombok.Data;
 
 @Data
@@ -33,8 +35,11 @@ public class Usuario implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idUsuario;
+    @NotBlank(message = "O CPF não pode ser vazio")
+    @Pattern(regexp = "\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2}", message = "CPF deve estar no formato xxx.xxx.xxx-xx")
     private String cpf;
     private String nomeUsuario;
+    @Pattern(regexp = "\\d{10,11}", message = "O telefone deve conter 10 ou 11 dígitos numéricos")
     private String telefone;
     private String senha;
     private UserRoles role;
@@ -66,12 +71,14 @@ public class Usuario implements UserDetails {
         this.contas = contas;
     }
     
-    //public Usuario(Long idUsuario,String cpf, String nomeUsuario, String telefone) {
-    	//this.idUsuario = idUsuario;
-    	//this.cpf = cpf;
-    	//this.nomeUsuario = nomeUsuario;
-    	//this.telefone = telefone;
-    //}
+	public Usuario(Long idUsuario,String cpf,String nomeUsuario, Set<Conta> contas) {
+		super();
+		this.idUsuario = idUsuario;
+		this.cpf = cpf;
+		this.nomeUsuario = nomeUsuario;
+		this.contas = contas;
+	}
+    
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -111,4 +118,6 @@ public class Usuario implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
+
 }

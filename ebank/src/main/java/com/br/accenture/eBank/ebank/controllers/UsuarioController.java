@@ -15,6 +15,8 @@ import com.br.accenture.eBank.ebank.dtos.UsuarioContaDTO;
 import com.br.accenture.eBank.ebank.dtos.UsuarioDTO;
 import com.br.accenture.eBank.ebank.services.UsuarioService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping(value = "/api/usuarios")
 public class UsuarioController {
@@ -31,7 +33,7 @@ public class UsuarioController {
 
 	@PutMapping(value = "/atualizar/{id}")
 	@PreAuthorize("#id == principal.idUsuario")
-	public ResponseEntity<UsuarioDTO> update(@PathVariable Long id, @RequestBody UsuarioDTO dto) {
+	public ResponseEntity<UsuarioDTO> update(@PathVariable Long id, @Valid @RequestBody UsuarioDTO dto) {
 		dto = service.update(id, dto);
 		return ResponseEntity.ok(dto);
 	}

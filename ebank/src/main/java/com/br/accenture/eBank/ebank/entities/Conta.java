@@ -17,6 +17,8 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PositiveOrZero;
 
 @Entity
 @Table(name = "tb_conta")
@@ -25,6 +27,8 @@ public class Conta {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long idConta;
+	@NotNull(message = "O número da conta não pode ser nulo")
+    @PositiveOrZero(message = "O número da conta deve ser positivo ou zero")
 	private int numeroConta;
 	private BigDecimal saldo;
 	private boolean ativa;

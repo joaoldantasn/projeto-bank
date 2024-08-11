@@ -43,35 +43,63 @@ public class UsuarioContaDTO {
 		contas = entity.getContas();
 	}
 
-
 	public Long getIdUsuario() {
 		return idUsuario;
+	}
+
+	public void setIdUsuario(Long idUsuario) {
+		this.idUsuario = idUsuario;
 	}
 
 	public String getCpf() {
 		return cpf;
 	}
 
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
+	}
+
 	public String getNomeUsuario() {
 		return nomeUsuario;
+	}
+
+	public void setNomeUsuario(String nomeUsuario) {
+		this.nomeUsuario = nomeUsuario;
 	}
 
 	public String getTelefone() {
 		return telefone;
 	}
 
+	public void setTelefone(String telefone) {
+		this.telefone = telefone;
+	}
+
 	public UserRoles getRole() {
 		return role;
+	}
+
+	public void setRole(UserRoles role) {
+		this.role = role;
 	}
 
 	public Endereco getEndereco() {
 		return endereco;
 	}
 
+	public void setEndereco(Endereco endereco) {
+		this.endereco = endereco;
+	}
+
 	public Set<Conta> getContas() {
 		return contas;
 	}
-    
+
+	public void setContas(Set<Conta> contas) {
+		this.contas = contas;
+	}
+
+	
     
 	
 }
