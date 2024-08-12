@@ -3,8 +3,12 @@ package com.br.accenture.eBank.ebank;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -131,4 +135,55 @@ class AgenciaServiceTest {
 
         verify(repository, times(1)).deleteById(id);
     }
+    
+    @Test
+    void testFindAllThrowsExceptionWhenRepositoryFails() {
+        Pageable pageable = PageRequest.of(0, 10);
+
+        when(repository.findAll(pageable)).thenThrow(new RuntimeException("Erro no repositório"));
+
+        assertThrows(RuntimeException.class, () -> service.findAll(pageable));
+    }
+    
+    @Test
+    void testInsertThrowsExceptionWhenSavingFails() {
+        Endereco endereco = new Endereco(1L, "Rua A", "12345678", "Cidade", "Estado", "123");
+        AgenciaDTO dto = new AgenciaDTO(null, 1001, endereco, "999999999");
+
+        when(repository.save(any(Agencia.class))).thenThrow(new RuntimeException("Falha ao salvar"));
+
+        assertThrows(RuntimeException.class, () -> service.insert(dto));
+    }
+    
+    @Test
+    void testDeleteThrowsExceptionWhenDeleteFails() {
+        Long id = 1L;
+
+        doThrow(new RuntimeException("Falha ao deletar")).when(repository).deleteById(id);
+
+        assertThrows(RuntimeException.class, () -> service.delete(id));
+    }
+    
+    @Test
+    void testFindByIdWithNullValues() {
+        Long id = 1L;
+
+        // Criando uma agência com valores válidos
+        Endereco endereco = new Endereco(1L, "Rua A", "12345678", "Cidade", "Estado", "123");
+        Agencia agencia = new Agencia(id, 1001, "999999999", endereco);
+        agencia.setUsuarios(new HashSet<>());  // Garantindo que a lista de usuários não é nula
+
+        when(repository.findById(id)).thenReturn(Optional.of(agencia));
+
+        AgenciaComUsuariosDTO dto = service.findById(id);
+
+        assertNotNull(dto);
+        assertEquals(id, dto.getIdAgencia());
+        assertEquals(1001, dto.getCodAgencia());
+        assertEquals("999999999", dto.getTelefone());
+        assertEquals(endereco, dto.getEndereco());
+        assertTrue(dto.getUsuarios().isEmpty());
+    }
+
+    
 }
