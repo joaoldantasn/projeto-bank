@@ -11,12 +11,14 @@ import { Icons } from "primeicons/primeicons.css";
 import 'primeflex/primeflex.css';
 import axios from 'axios';
 import Cliente from './Pages/Cliente';
+//import Home from './Pages/Home';
 
 
 function App() {
   return (
     <div>
       <Cliente></Cliente>
+      {/* <Home></Home> */}
     </div>
   );
 }
