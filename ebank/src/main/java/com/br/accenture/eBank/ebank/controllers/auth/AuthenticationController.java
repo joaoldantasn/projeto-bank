@@ -1,6 +1,7 @@
 package com.br.accenture.eBank.ebank.controllers.auth;
 
 import java.util.HashSet;
+import java.util.Random;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -103,7 +104,7 @@ public class AuthenticationController {
                 .map(contaDTO -> {
                     Conta conta = new Conta(
                             null,  // ID será gerado automaticamente
-                            contaDTO.numeroConta(),
+                            generateNumeroConta(),  // Gera o número da conta automaticamente
                             contaDTO.saldo(),
                             contaDTO.ativa(),
                             contaDTO.chavePix(),
@@ -127,5 +128,10 @@ public class AuthenticationController {
         return ResponseEntity.ok().body("Usuário registrado com sucesso.");
     }
 
+    // Método para gerar número de conta aleatório
+    private int generateNumeroConta() {
+        Random random = new Random();
+        return random.nextInt(90000000) + 10000000; // Exemplo de 8 dígitos
+    }
 
 }

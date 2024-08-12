@@ -78,6 +78,20 @@ public class Usuario implements UserDetails {
 		this.nomeUsuario = nomeUsuario;
 		this.contas = contas;
 	}
+	
+	public Usuario(Long idUsuario,
+			String cpf,
+			String nomeUsuario,
+			String telefone,
+			String senha, Endereco endereco) {
+		this.idUsuario = idUsuario;
+		this.cpf = cpf;
+		this.nomeUsuario = nomeUsuario;
+		this.telefone = telefone;
+		this.senha = senha;
+		this.endereco = endereco;
+	}
+	
     
 
     @Override
@@ -118,6 +132,8 @@ public class Usuario implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
+
 
 
 }
