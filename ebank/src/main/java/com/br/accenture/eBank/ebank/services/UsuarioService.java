@@ -32,13 +32,13 @@ public class UsuarioService {
 
 	@Autowired
 	private TransacaoRepository transacaoRepository;
-	
+
 	@Autowired
 	private EnderecoRepository enderecoRepository;
-	
+
 	@Autowired
-    private PasswordEncoder passwordEncoder;
-	
+	private PasswordEncoder passwordEncoder;
+
 	@Transactional(readOnly = true)
 	public UsuarioContaDTO findById(Long id) {
 		Optional<Usuario> resultado = repository.findById(id);
@@ -46,50 +46,55 @@ public class UsuarioService {
 		UsuarioContaDTO dto = new UsuarioContaDTO(usuario);
 		return dto;
 	}
+	
+	@Transactional(readOnly = true)
+	public Usuario findByCpf(String cpf) {
+	    return repository.findByCpfAsUsuario(cpf)
+	            .orElseThrow(() -> new EntityNotFoundException("Usuário com CPF " + cpf + " não encontrado"));
+	}
 
 	@Transactional
 	public UsuarioPutDTO update(Long id, UsuarioPutDTO dto) {
-	    Usuario entity = repository.getReferenceById(id);
+		Usuario entity = repository.getReferenceById(id);
 
-	    // Atualiza o usuário com os dados do DTO
-	    copyDtoToEntity(dto, entity);
+		// Atualiza o usuário com os dados do DTO
+		copyDtoToEntity(dto, entity);
 
-	    // Salva as alterações do usuário
-	    entity = repository.save(entity);
+		// Salva as alterações do usuário
+		entity = repository.save(entity);
 
-	    return new UsuarioPutDTO(entity);
+		return new UsuarioPutDTO(entity);
 	}
 
 	@Transactional
 	private void copyDtoToEntity(UsuarioPutDTO dto, Usuario entity) {
-	    
-	    entity.setCpf(dto.getCpf());
-	    entity.setNomeUsuario(dto.getNomeUsuario());
-	    entity.setTelefone(dto.getTelefone());
 
-	    
-	    if (dto.getSenha() != null && !dto.getSenha().isEmpty()) {
-	        entity.setSenha(passwordEncoder.encode(dto.getSenha()));
-	    }
+		entity.setCpf(dto.getCpf());
+		entity.setNomeUsuario(dto.getNomeUsuario());
+		entity.setTelefone(dto.getTelefone());
 
-	    
-	    if (dto.getEndereco() != null) {
-	        Endereco endereco = dto.getEndereco();
-	        if (endereco.getIdEndereco() == null) {
-	           
-	            endereco = enderecoRepository.save(endereco);
-	        } else {
-	            
-	            endereco = enderecoRepository.findById(endereco.getIdEndereco())
-	                            .orElseThrow(() -> new EntityNotFoundException("Endereco não encontrado"));
-	        }
-	        entity.setEndereco(endereco);
-	    }
+		if (dto.getSenha() != null && !dto.getSenha().isEmpty()) {
+			entity.setSenha(passwordEncoder.encode(dto.getSenha()));
+		}
+
+		if (dto.getEndereco() != null) {
+			Endereco endereco = dto.getEndereco();
+			if (endereco.getIdEndereco() == null) {
+
+				endereco = enderecoRepository.save(endereco);
+			} else {
+
+				endereco = enderecoRepository.findById(endereco.getIdEndereco())
+						.orElseThrow(() -> new EntityNotFoundException("Endereco não encontrado"));
+			}
+			entity.setEndereco(endereco);
+		}
 	}
 
 	@Transactional
 	public void delete(Long id) {
-		Usuario user = repository.findById(id).orElseThrow(() -> new ContaNaoEncontradaException("Conta Não encontrada"));
+		Usuario user = repository.findById(id)
+				.orElseThrow(() -> new ContaNaoEncontradaException("Conta Não encontrada"));
 
 		Set<Conta> contas = new HashSet<>(user.getContas());
 		List<Transacao> transacoes = transacaoRepository.findByContaOrContaDestinatario(contas);
@@ -98,17 +103,16 @@ public class UsuarioService {
 		repository.deleteById(id);
 	}
 
-
 	/*
-	 * Autentica se o usuario está acessando os dados correspondentes ao do seu Login
+	 * Autentica se o usuario está acessando os dados correspondentes ao do seu
+	 * Login
 	 */
 	public boolean isUserAuthorized(Authentication authentication, Long idUsuario) {
-	    // Recupera o usuário autenticado pelo CPF
-	    Usuario currentUser = (Usuario) repository.findByCpf(authentication.getName());
+		// Recupera o usuário autenticado pelo CPF
+		Usuario currentUser = (Usuario) repository.findByCpf(authentication.getName());
 
-	    // Verifica se o ID do usuário autenticado corresponde ao ID solicitado
-	    return currentUser.getIdUsuario().equals(idUsuario);
+		// Verifica se o ID do usuário autenticado corresponde ao ID solicitado
+		return currentUser.getIdUsuario().equals(idUsuario);
 	}
-
 
 }
