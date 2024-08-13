@@ -1,4 +1,4 @@
-package com.br.accenture.eBank.ebank;
+package com.br.accenture.eBank.ebank.transacao;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

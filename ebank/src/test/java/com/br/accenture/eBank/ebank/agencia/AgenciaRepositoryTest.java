@@ -1,4 +1,4 @@
-package com.br.accenture.eBank.ebank;
+package com.br.accenture.eBank.ebank.agencia;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.fail;

@@ -1,4 +1,4 @@
-package com.br.accenture.eBank.ebank;
+package com.br.accenture.eBank.ebank.auth;
 
 import com.br.accenture.eBank.ebank.entities.Usuario;
 import com.br.accenture.eBank.ebank.repositories.UsuarioRepository;

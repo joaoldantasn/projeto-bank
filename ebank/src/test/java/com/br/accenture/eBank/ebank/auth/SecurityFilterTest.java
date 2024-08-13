@@ -1,4 +1,4 @@
-package com.br.accenture.eBank.ebank;
+package com.br.accenture.eBank.ebank.auth;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.never;

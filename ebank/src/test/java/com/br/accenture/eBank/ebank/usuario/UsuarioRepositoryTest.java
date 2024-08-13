@@ -1,4 +1,4 @@
-package com.br.accenture.eBank.ebank;
+package com.br.accenture.eBank.ebank.usuario;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

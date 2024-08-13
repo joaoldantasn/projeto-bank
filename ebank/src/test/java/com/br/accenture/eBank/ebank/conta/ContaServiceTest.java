@@ -1,4 +1,4 @@
-package com.br.accenture.eBank.ebank;
+package com.br.accenture.eBank.ebank.conta;
 
 import com.br.accenture.eBank.ebank.dtos.ContaResponseDTO;
 import com.br.accenture.eBank.ebank.dtos.ExtratoDTO;

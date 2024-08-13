@@ -50,6 +50,32 @@ public class UsuarioEContaDTO {
 	public Set<Conta> getContas() {
 		return contas;
 	}
+
+
+
+	public void setIdUsuario(Long idUsuario) {
+		this.idUsuario = idUsuario;
+	}
+
+
+
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
+	}
+
+
+
+	public void setNomeUsuario(String nomeUsuario) {
+		this.nomeUsuario = nomeUsuario;
+	}
+
+
+
+	public void setContas(Set<Conta> contas) {
+		this.contas = contas;
+	}
+	
+	
 	
 	
 	

@@ -1,4 +1,4 @@
-package com.br.accenture.eBank.ebank;
+package com.br.accenture.eBank.ebank.transacao;
 
 import com.br.accenture.eBank.ebank.dtos.TransacaoExtratoDTO;
 import com.br.accenture.eBank.ebank.entities.Conta;
