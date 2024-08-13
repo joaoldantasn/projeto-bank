@@ -1,14 +1,12 @@
 package com.br.accenture.eBank.ebank;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
@@ -18,7 +16,6 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.br.accenture.eBank.ebank.dtos.UsuarioContaDTO;
@@ -27,14 +24,12 @@ import com.br.accenture.eBank.ebank.entities.Conta;
 import com.br.accenture.eBank.ebank.entities.Endereco;
 import com.br.accenture.eBank.ebank.entities.Transacao;
 import com.br.accenture.eBank.ebank.entities.Usuario;
-import com.br.accenture.eBank.ebank.exceptions.ContaNaoEncontradaException;
 import com.br.accenture.eBank.ebank.repositories.EnderecoRepository;
 import com.br.accenture.eBank.ebank.repositories.TransacaoRepository;
 import com.br.accenture.eBank.ebank.repositories.UsuarioRepository;
 import com.br.accenture.eBank.ebank.services.UsuarioService;
 
 import jakarta.persistence.EntityNotFoundException;
-import jakarta.validation.ConstraintViolationException;
 
 class UsuarioServiceTest {
 

@@ -19,7 +19,7 @@ public class Transacao {
     private Instant dataHora;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "tipo")
+    @Column(name = "tipo", nullable = false)
     private Operacao tipo;
 
     private BigDecimal valor;
