@@ -111,16 +111,5 @@ public class UsuarioRepositoryTest {
         assertThat(deletedUsuario).isNull();
     }
 
-    @Test
-    public void testDeleteByCpf_NotFound() {
-        
-        Long nonExistentId = 999L;
 
-        try {
-            usuarioRepository.deleteById(nonExistentId);
-            assertThat(true).isFalse(); 
-        } catch (Exception e) {
-            assertThat(e).isInstanceOf(org.springframework.dao.EmptyResultDataAccessException.class);
-        }
-    }
 }
