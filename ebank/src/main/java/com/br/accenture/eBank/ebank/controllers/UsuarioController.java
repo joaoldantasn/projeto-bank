@@ -9,10 +9,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.br.accenture.eBank.ebank.dtos.UsuarioContaDTO;
 import com.br.accenture.eBank.ebank.dtos.UsuarioPutDTO;
+import com.br.accenture.eBank.ebank.entities.Usuario;
 import com.br.accenture.eBank.ebank.services.UsuarioService;
 
 import jakarta.validation.Valid;
@@ -25,9 +27,16 @@ public class UsuarioController {
 	private UsuarioService service;
 
 	@GetMapping(value = "/{id}")
-	@PreAuthorize("#id == principal.idUsuario") //anotacao utilizada para verificar a correspondencia do usuario
+	@PreAuthorize("#id == principal.idUsuario") // anotacao utilizada para verificar a correspondencia do usuario
 	public ResponseEntity<UsuarioContaDTO> findById(@PathVariable Long id) {
 		UsuarioContaDTO dto = service.findById(id);
+		return ResponseEntity.ok(dto);
+	}
+
+	@GetMapping
+	public ResponseEntity<UsuarioContaDTO> findByCpf(@RequestParam String cpf) {
+		Usuario usuario = service.findByCpf(cpf);
+		UsuarioContaDTO dto = new UsuarioContaDTO(usuario);
 		return ResponseEntity.ok(dto);
 	}
 
