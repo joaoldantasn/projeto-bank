@@ -8,6 +8,7 @@ import com.br.accenture.eBank.ebank.entities.Endereco;
 import com.br.accenture.eBank.ebank.entities.Usuario;
 import com.br.accenture.eBank.ebank.entities.enums.TipoConta;
 import com.br.accenture.eBank.ebank.exceptions.ContaNaoEncontradaException;
+import com.br.accenture.eBank.ebank.repositories.AgenciaRepository;
 import com.br.accenture.eBank.ebank.repositories.ContaRepository;
 import com.br.accenture.eBank.ebank.repositories.UsuarioRepository;
 import com.br.accenture.eBank.ebank.services.ContaService;
@@ -18,6 +19,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 import java.math.BigDecimal;
 import java.time.Instant;
@@ -25,7 +29,7 @@ import java.time.Instant;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.ANY)
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 public class ContaServiceTest {
 
     @Autowired
@@ -41,15 +45,34 @@ public class ContaServiceTest {
     private ContaService contaService;
     @Autowired
     private UsuarioRepository usuarioRepository;
+    @Autowired
+    private AgenciaRepository agenciaRepository;
 
     @BeforeEach
     public void setUp() {
 
     }
 
+
+    @Test
+    public void testFindAll() {
+        Conta conta1 = new Conta();
+        conta1.setChavePix("chave1@pix.com");
+        conta1.setSaldo(BigDecimal.valueOf(100.00));
+        contaRepository.save(conta1);
+
+        Conta conta2 = new Conta();
+        conta2.setChavePix("chave2@pix.com");
+        conta2.setSaldo(BigDecimal.valueOf(200.00));
+        contaRepository.save(conta2);
+
+        Pageable pageable = PageRequest.of(0, 10);
+        Page<ContaResponseDTO> result = contaService.findAll(pageable);
+        assertEquals(13, result.getTotalElements());
+
+    }
     @Test
     public void testFindById_Success() {
-        // Prepare a conta
         Conta conta = new Conta();
         conta.setTipoConta(TipoConta.CORRENTE);
         conta.setNumeroConta(12345);
@@ -120,6 +143,22 @@ public class ContaServiceTest {
     }
 
     @Test
+    public void testFindByChavePix() {
+
+        Conta conta = new Conta();
+        conta.setChavePix("pix@pix.com");
+        contaRepository.save(conta);
+        ContaResponseDTO contaSaved = contaService.findByChavePix("pix@pix.com");
+        assertEquals("pix@pix.com", contaSaved.getChavePix());
+    }
+
+    @Test
+    public void testFindByChavePixNotFound() {
+        assertThrows(ContaNaoEncontradaException.class, () ->
+                contaService.findByChavePix("chave@pix.com"));
+    }
+
+    @Test
     public void testGetExtrato_Success() {
         Usuario usuario = new Usuario();
         usuario.setNomeUsuario("João");
@@ -128,12 +167,12 @@ public class ContaServiceTest {
 
         Endereco endereco = new Endereco();
         endereco.setIdEndereco(1L);
-        endereco.setCep("54545000");
+        endereco.setCep("54545-000");
         endereco.setBairro("Bela Vista");
         endereco.setCidade("Monteiro");
         endereco.setNumero("45");
 
-        Agencia agencia = new Agencia(1L, 12345, "831234567890", endereco);
+        Agencia agencia = new Agencia(1L, 12345, "83123456789", endereco);
         usuario.setAgencia(agencia);
         Conta conta = new Conta();
         conta.setTipoConta(TipoConta.POUPANCA);
@@ -154,5 +193,18 @@ public class ContaServiceTest {
         assertNotNull(extrato);
         assertEquals(conta.getNumeroConta(), extrato.getNumConta());
         assertEquals(usuario.getNomeUsuario(), extrato.getNomeUsuario());
+    }
+
+    @Test
+    public void testGetExtrato_NotFound() {
+
+        Instant startDate = Instant.now().minusSeconds(3600);
+        Instant endDate = Instant.now();
+
+        assertThrows(ContaNaoEncontradaException.class, () ->
+                contaService.getExtrato(99L, startDate, endDate));
+
+
+
     }
 }

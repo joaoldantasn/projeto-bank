@@ -3,21 +3,28 @@ package com.br.accenture.eBank.ebank;
 import com.br.accenture.eBank.ebank.controllers.ContaController;
 import com.br.accenture.eBank.ebank.dtos.ContaResponseDTO;
 import com.br.accenture.eBank.ebank.dtos.ExtratoDTO;
+import com.br.accenture.eBank.ebank.entities.Conta;
+import com.br.accenture.eBank.ebank.entities.enums.TipoConta;
 import com.br.accenture.eBank.ebank.services.ContaService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import org.springframework.data.domain.*;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 
+import java.math.BigDecimal;
 import java.time.Instant;
+import java.util.Collections;
 
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -38,7 +45,6 @@ public class ContaControllerTest {
         MockitoAnnotations.openMocks(this);
         mockMvc = MockMvcBuilders.standaloneSetup(contaController).build();
     }
-
 
     @Test
     @WithMockUser(username = "user", authorities = {"ROLE_USER"})
