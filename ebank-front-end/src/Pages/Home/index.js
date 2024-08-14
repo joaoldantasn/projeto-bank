@@ -49,12 +49,14 @@ export default function Home() {
         }
         retornaUsuario();
 
-        if (usuario.role == "ADMIN") {
-            history.push('/admin')
-        }
-        if (usuario.role == "USER") {
-            history.push('/user')
-        }
+        setTimeout(() => {
+            if (usuario.role == "ADMIN") {
+                history.push('/admin')
+            }
+            if (usuario.role == "USER") {
+                history.push('/user')
+            }
+        }, 1000);
     }
 
     return (

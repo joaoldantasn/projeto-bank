@@ -11,9 +11,11 @@ import AppToolbar from '../AppToolbar';
 import SaldoToolbar from '../SaldoToolbar';
 import NomeToolbar from '../NomeToolbar';
 import PainelTransferenciaPix from '../PainelTransferenciaPix';
+import { useUsuario } from '../../Hooks/useUsuario';
 
-export default function TabViewCliente(props) {
-
+export default function TabViewCliente() {
+    
+    const usuario = useUsuario();
     const toast = useRef(null);
     const [activeIndex, setActiveIndex] = useState(0);
 
