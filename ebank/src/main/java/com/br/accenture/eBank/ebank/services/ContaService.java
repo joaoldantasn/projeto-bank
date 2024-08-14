@@ -1,8 +1,8 @@
 package com.br.accenture.eBank.ebank.services;
 
-import com.br.accenture.eBank.ebank.dtos.ContaResponseDTO;
-import com.br.accenture.eBank.ebank.dtos.ExtratoDTO;
-import com.br.accenture.eBank.ebank.dtos.TransacaoExtratoDTO;
+import com.br.accenture.eBank.ebank.dtos.conta.ContaResponseDTO;
+import com.br.accenture.eBank.ebank.dtos.transacao.ExtratoDTO;
+import com.br.accenture.eBank.ebank.dtos.transacao.TransacaoExtratoDTO;
 import com.br.accenture.eBank.ebank.entities.Conta;
 import com.br.accenture.eBank.ebank.exceptions.ContaNaoEncontradaException;
 import com.br.accenture.eBank.ebank.repositories.ContaRepository;

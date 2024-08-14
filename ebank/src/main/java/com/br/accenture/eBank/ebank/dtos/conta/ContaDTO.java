@@ -1,4 +1,4 @@
-package com.br.accenture.eBank.ebank.dtos;
+package com.br.accenture.eBank.ebank.dtos.conta;
 
 import java.math.BigDecimal;
 

@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.br.accenture.eBank.ebank.dtos.UsuarioContaDTO;
-import com.br.accenture.eBank.ebank.dtos.UsuarioPutDTO;
+import com.br.accenture.eBank.ebank.dtos.usuario.UsuarioContaDTO;
+import com.br.accenture.eBank.ebank.dtos.usuario.UsuarioPutDTO;
 import com.br.accenture.eBank.ebank.entities.Usuario;
 import com.br.accenture.eBank.ebank.services.UsuarioService;
 

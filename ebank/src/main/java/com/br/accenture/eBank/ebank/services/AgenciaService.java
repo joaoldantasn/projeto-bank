@@ -8,8 +8,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.br.accenture.eBank.ebank.dtos.AgenciaComUsuariosDTO;
-import com.br.accenture.eBank.ebank.dtos.AgenciaDTO;
+import com.br.accenture.eBank.ebank.dtos.agencia.AgenciaComUsuariosDTO;
+import com.br.accenture.eBank.ebank.dtos.agencia.AgenciaDTO;
 import com.br.accenture.eBank.ebank.entities.Agencia;
 import com.br.accenture.eBank.ebank.repositories.AgenciaRepository;
 

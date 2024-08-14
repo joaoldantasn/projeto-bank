@@ -9,7 +9,7 @@ import java.util.Set;
 
 import org.junit.jupiter.api.Test;
 
-import com.br.accenture.eBank.ebank.dtos.UsuarioContaDTO;
+import com.br.accenture.eBank.ebank.dtos.usuario.UsuarioContaDTO;
 import com.br.accenture.eBank.ebank.entities.Conta;
 import com.br.accenture.eBank.ebank.entities.Endereco;
 import com.br.accenture.eBank.ebank.entities.enums.auth.UserRoles;

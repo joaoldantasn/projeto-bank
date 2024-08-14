@@ -10,8 +10,8 @@ import java.math.BigDecimal;
 
 import org.junit.jupiter.api.Test;
 
-import com.br.accenture.eBank.ebank.dtos.ContaComUsuarioDTO;
-import com.br.accenture.eBank.ebank.dtos.UsuarioDTO;
+import com.br.accenture.eBank.ebank.dtos.conta.ContaComUsuarioDTO;
+import com.br.accenture.eBank.ebank.dtos.usuario.UsuarioDTO;
 import com.br.accenture.eBank.ebank.entities.Conta;
 import com.br.accenture.eBank.ebank.entities.Usuario;
 import com.br.accenture.eBank.ebank.entities.enums.TipoConta;
