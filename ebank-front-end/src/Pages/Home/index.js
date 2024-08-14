@@ -12,20 +12,22 @@ export default function Home() {
     const history = useHistory();
     const [senha, setSenha] = useState('');
     const [CPF, setCPF] = useState('');
-    const [usuario, setUsuario] = useState();
+    const [usuario, setUsuario] = useState(null);
 
     const retornaUsuario = async () => {
         try {
             const response = await UsuarioService.getUsuarioByCPF(CPF);
             setUsuario(response.data);
-            salvarUsuarioNoLocalStorage(usuario);
+            salvarUsuarioNoLocalStorage(response.data);
         } catch (error) {
             console.error(error);
         }
     };
 
     useEffect(() => {
-        retornaUsuario();
+        if (CPF) {
+            retornaUsuario();
+        }
     }, [CPF]);
 
     const salvarUsuarioNoLocalStorage = (usuario) => {
@@ -44,19 +46,20 @@ export default function Home() {
 
         try {
             await AuthService.postLogin(auth);
+            await retornaUsuario();
+
+            if (usuario && usuario.role) {
+                if (usuario.role === "ADMIN") {
+                    history.push('/admin');
+                } else if (usuario.role === "USER") {
+                    history.push('/user');
+                }
+            } else {
+                console.error('Usuário ou role não definido.');
+            }
         } catch (error) {
             console.error(error);
         }
-        retornaUsuario();
-
-        setTimeout(() => {
-            if (usuario.role == "ADMIN") {
-                history.push('/admin')
-            }
-            if (usuario.role == "USER") {
-                history.push('/user')
-            }
-        }, 1000);
     }
 
     return (
