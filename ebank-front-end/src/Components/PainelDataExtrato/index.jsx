@@ -1,4 +1,3 @@
-
 import React, { useRef, useState, useEffect } from 'react';
 import { Calendar } from 'primereact/calendar';
 import { Card } from "primereact/card";
@@ -6,13 +5,16 @@ import { Button } from "primereact/button";
 import { Password } from 'primereact/password';
 import { Toast } from 'primereact/toast';
 import TrasacaoService from '../../Services/TrasacaoService';
+import { useUsuario } from '../../Hooks/useUsuario';
 
 export default function PainelDataExtrato() {
+    const usuario = useUsuario();
     const [dataInicio, setDataInicio] = useState(null);
     const [dataFinal, setDataFinal] = useState(null);
     const [senha, setSenha] = useState('');
-    const id = 1
+    const [id, setId] = useState(null);
     const toast = useRef(null);
+
     const showSuccess = () => {
         toast.current.show({
             severity: 'success',
@@ -22,11 +24,26 @@ export default function PainelDataExtrato() {
         });
     }
 
-    async function submeter() {
-        const contaID = 1
-        TrasacaoService.getExtrato(id, dataInicio.toISOString(), dataFinal.toISOString())
-        showSuccess();
-        // fazer tymount e redirecionar para exibir extrato e um botão de download do mesmo.
+    useEffect(() => {
+        if (usuario && usuario.idUsuario) {
+            setId(usuario.idUsuario);
+            console.log(id)
+        }
+    }, [usuario]);
+
+    const submeter = async () => {
+        if (!id) {
+            console.error("Usuário não carregado. ID não disponível.");
+            return;
+        }
+
+        try {
+            await TrasacaoService.getExtrato(id, dataInicio.toISOString(), dataFinal.toISOString());
+            showSuccess();
+            // Adicionar timeout e redirecionamento se necessário
+        } catch (error) {
+            console.error("Erro ao enviar o formulário: ", error);
+        }
     }
 
     return (
@@ -39,9 +56,7 @@ export default function PainelDataExtrato() {
                         </label>
                         <Calendar id="buttondisplay" value={dataInicio} onChange={(e) => setDataInicio(e.value)} showIcon />
                     </div>
-
                 </div>
-
             </Card>
             <Card subTitle='ESCOLHA UMA DATA DE FINAL' >
                 <div style={{ width: '25%' }} className="card flex flex-wrap gap-3 p-fluid">
@@ -50,12 +65,10 @@ export default function PainelDataExtrato() {
                         </label>
                         <Calendar id="buttondisplay" value={dataFinal} onChange={(e) => setDataFinal(e.value)} showIcon />
                     </div>
-
                 </div>
             </Card>
             <Card subTitle='SENHA' >
                 <div className="card flex justify-content-center">
-
                     <Password value={senha}
                         onChange={(e) => setSenha(e.target.value)} toggleMask />
                 </div>
@@ -64,5 +77,5 @@ export default function PainelDataExtrato() {
                 <Button className={''} label="ENVIAR" onClick={submeter} />
             </Card>
         </div>
-    )
+    );
 }
