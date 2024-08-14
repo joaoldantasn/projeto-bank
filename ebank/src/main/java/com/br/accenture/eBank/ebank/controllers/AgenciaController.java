@@ -1,6 +1,7 @@
 package com.br.accenture.eBank.ebank.controllers;
 
 import java.net.URI;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -37,6 +38,12 @@ public class AgenciaController {
 	@GetMapping
 	public ResponseEntity<Page<AgenciaDTO>> findAll(Pageable pageable){
 		Page<AgenciaDTO> dto = service.findAll(pageable);
+		return ResponseEntity.ok(dto);
+	}
+
+	@GetMapping("/accounts")
+	public ResponseEntity<List<AgenciaComUsuariosDTO>> findAllWithUsers(){
+		List<AgenciaComUsuariosDTO> dto = service.findAllWithUsersAccoount();
 		return ResponseEntity.ok(dto);
 	}
 	
