@@ -29,9 +29,9 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
-import com.br.accenture.eBank.ebank.dtos.AgenciaComUsuariosDTO;
-import com.br.accenture.eBank.ebank.dtos.AgenciaDTO;
-import com.br.accenture.eBank.ebank.dtos.UsuarioEContaDTO;
+import com.br.accenture.eBank.ebank.dtos.agencia.AgenciaComUsuariosDTO;
+import com.br.accenture.eBank.ebank.dtos.agencia.AgenciaDTO;
+import com.br.accenture.eBank.ebank.dtos.usuario.UsuarioEContaDTO;
 import com.br.accenture.eBank.ebank.entities.Agencia;
 import com.br.accenture.eBank.ebank.entities.Conta;
 import com.br.accenture.eBank.ebank.entities.Endereco;

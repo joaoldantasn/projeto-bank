@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 
 import org.junit.jupiter.api.Test;
 
-import com.br.accenture.eBank.ebank.dtos.UsuarioDTO;
+import com.br.accenture.eBank.ebank.dtos.usuario.UsuarioDTO;
 import com.br.accenture.eBank.ebank.entities.Usuario;
 
 class UsuarioDTOTest {

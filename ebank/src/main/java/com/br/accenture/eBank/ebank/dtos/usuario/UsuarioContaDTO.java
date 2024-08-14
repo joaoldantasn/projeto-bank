@@ -1,4 +1,4 @@
-package com.br.accenture.eBank.ebank.dtos;
+package com.br.accenture.eBank.ebank.dtos.usuario;
 
 import java.util.HashSet;
 import java.util.Set;

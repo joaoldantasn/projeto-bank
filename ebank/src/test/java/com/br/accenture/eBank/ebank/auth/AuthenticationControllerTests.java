@@ -33,10 +33,10 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
 import com.br.accenture.eBank.ebank.configs.TokenService;
-import com.br.accenture.eBank.ebank.dtos.ContaDTO;
-import com.br.accenture.eBank.ebank.dtos.EnderecoDTO;
 import com.br.accenture.eBank.ebank.dtos.auth.AuthenticationDTO;
 import com.br.accenture.eBank.ebank.dtos.auth.RegisterDTO;
+import com.br.accenture.eBank.ebank.dtos.conta.ContaDTO;
+import com.br.accenture.eBank.ebank.dtos.endereco.EnderecoDTO;
 import com.br.accenture.eBank.ebank.entities.Usuario;
 import com.br.accenture.eBank.ebank.entities.enums.TipoConta;
 import com.br.accenture.eBank.ebank.entities.enums.auth.UserRoles;

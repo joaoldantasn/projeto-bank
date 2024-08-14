@@ -1,4 +1,4 @@
-package com.br.accenture.eBank.ebank.dtos;
+package com.br.accenture.eBank.ebank.dtos.conta;
 
 import com.br.accenture.eBank.ebank.entities.Conta;
 import com.br.accenture.eBank.ebank.entities.enums.TipoConta;

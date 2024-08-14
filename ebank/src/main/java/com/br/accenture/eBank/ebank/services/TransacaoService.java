@@ -1,7 +1,7 @@
 package com.br.accenture.eBank.ebank.services;
 
-import com.br.accenture.eBank.ebank.dtos.ContaResponseDTO;
-import com.br.accenture.eBank.ebank.dtos.TransacaoExtratoDTO;
+import com.br.accenture.eBank.ebank.dtos.conta.ContaResponseDTO;
+import com.br.accenture.eBank.ebank.dtos.transacao.TransacaoExtratoDTO;
 import com.br.accenture.eBank.ebank.entities.Conta;
 import com.br.accenture.eBank.ebank.entities.Transacao;
 import com.br.accenture.eBank.ebank.entities.enums.Operacao;

@@ -1,4 +1,4 @@
-package com.br.accenture.eBank.ebank.dtos;
+package com.br.accenture.eBank.ebank.dtos.usuario;
 
 import com.br.accenture.eBank.ebank.entities.Usuario;
 

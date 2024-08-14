@@ -1,9 +1,10 @@
-package com.br.accenture.eBank.ebank.dtos;
-
-import com.br.accenture.eBank.ebank.entities.Conta;
-import com.br.accenture.eBank.ebank.entities.enums.TipoConta;
+package com.br.accenture.eBank.ebank.dtos.conta;
 
 import java.math.BigDecimal;
+
+import com.br.accenture.eBank.ebank.dtos.usuario.UsuarioDTO;
+import com.br.accenture.eBank.ebank.entities.Conta;
+import com.br.accenture.eBank.ebank.entities.enums.TipoConta;
 
 public class ContaComUsuarioDTO {
 

@@ -20,8 +20,8 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import com.br.accenture.eBank.ebank.dtos.UsuarioContaDTO;
-import com.br.accenture.eBank.ebank.dtos.UsuarioPutDTO;
+import com.br.accenture.eBank.ebank.dtos.usuario.UsuarioContaDTO;
+import com.br.accenture.eBank.ebank.dtos.usuario.UsuarioPutDTO;
 import com.br.accenture.eBank.ebank.entities.Conta;
 import com.br.accenture.eBank.ebank.entities.Endereco;
 import com.br.accenture.eBank.ebank.entities.Transacao;

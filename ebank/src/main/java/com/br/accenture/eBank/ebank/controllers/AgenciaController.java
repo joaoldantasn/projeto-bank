@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.br.accenture.eBank.ebank.dtos.AgenciaComUsuariosDTO;
-import com.br.accenture.eBank.ebank.dtos.AgenciaDTO;
+import com.br.accenture.eBank.ebank.dtos.agencia.AgenciaComUsuariosDTO;
+import com.br.accenture.eBank.ebank.dtos.agencia.AgenciaDTO;
 import com.br.accenture.eBank.ebank.services.AgenciaService;
 
 import jakarta.validation.Valid;

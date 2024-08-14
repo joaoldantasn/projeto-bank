@@ -1,7 +1,7 @@
 package com.br.accenture.eBank.ebank.controllers;
 
-import com.br.accenture.eBank.ebank.dtos.ContaResponseDTO;
-import com.br.accenture.eBank.ebank.dtos.ExtratoDTO;
+import com.br.accenture.eBank.ebank.dtos.conta.ContaResponseDTO;
+import com.br.accenture.eBank.ebank.dtos.transacao.ExtratoDTO;
 import com.br.accenture.eBank.ebank.services.ContaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
