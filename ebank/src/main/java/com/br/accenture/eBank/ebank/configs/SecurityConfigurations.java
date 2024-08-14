@@ -39,7 +39,7 @@ public class SecurityConfigurations {
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/register").hasRole("ADMIN")
-                        .requestMatchers("/api/agencias/**").permitAll()
+                        .requestMatchers("/api/agencias/**").hasRole("ADMIN")
                         .requestMatchers("/api/transacao/**").authenticated()
                         .requestMatchers(HttpMethod.GET, "/api/conta").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/api/conta/{id}").hasRole("ADMIN")

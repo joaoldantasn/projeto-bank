@@ -1,7 +1,8 @@
 package com.br.accenture.eBank.ebank.services;
 
-import com.br.accenture.eBank.ebank.dtos.AgenciaComUsuariosDTO;
-import com.br.accenture.eBank.ebank.dtos.AgenciaDTO;
+
+import com.br.accenture.eBank.ebank.dtos.agencia.AgenciaComUsuariosDTO;
+import com.br.accenture.eBank.ebank.dtos.agencia.AgenciaDTO;
 import com.br.accenture.eBank.ebank.entities.Agencia;
 import com.br.accenture.eBank.ebank.repositories.AgenciaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +33,7 @@ public class AgenciaService {
 	@Transactional(readOnly = true)
 	public Page<AgenciaDTO> findAll(Pageable pageable) {
 		Page<Agencia> resultado = repository.findAll(pageable);
-		return resultado.map(x -> new AgenciaDTO(x));
+		return resultado.map(AgenciaDTO::new);
 	}
 
 	@Transactional(readOnly = true)
