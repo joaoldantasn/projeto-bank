@@ -128,6 +128,10 @@ public class Endereco {
 
 	public Set<Usuario> getUsuarios() {
 		return usuarios;
+	}
+
+	public void setUsuarios(Set<Usuario> usuarios) {
+		this.usuarios = usuarios;
 	}	
 	
 }

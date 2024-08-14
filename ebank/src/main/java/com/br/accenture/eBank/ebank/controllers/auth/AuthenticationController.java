@@ -60,7 +60,7 @@ public class AuthenticationController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<?> register(@RequestBody @Valid RegisterDTO data) {
+    public ResponseEntity<String> register(@RequestBody @Valid RegisterDTO data) {
         // Verifica se já existe um usuário com o CPF fornecido
         if (this.repository.findByCpf(data.cpf()) != null) {
             return ResponseEntity.badRequest().body("Usuário já existente com o CPF fornecido.");

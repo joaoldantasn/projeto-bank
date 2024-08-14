@@ -1,6 +1,7 @@
 package com.br.accenture.eBank.ebank.controllers;
 
 import java.net.URI;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -15,8 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.br.accenture.eBank.ebank.dtos.AgenciaComUsuariosDTO;
-import com.br.accenture.eBank.ebank.dtos.AgenciaDTO;
+import com.br.accenture.eBank.ebank.dtos.agencia.AgenciaComUsuariosDTO;
+import com.br.accenture.eBank.ebank.dtos.agencia.AgenciaDTO;
 import com.br.accenture.eBank.ebank.services.AgenciaService;
 
 import jakarta.validation.Valid;
@@ -37,6 +38,12 @@ public class AgenciaController {
 	@GetMapping
 	public ResponseEntity<Page<AgenciaDTO>> findAll(Pageable pageable){
 		Page<AgenciaDTO> dto = service.findAll(pageable);
+		return ResponseEntity.ok(dto);
+	}
+
+	@GetMapping("/accounts")
+	public ResponseEntity<List<AgenciaComUsuariosDTO>> findAllWithUsers(){
+		List<AgenciaComUsuariosDTO> dto = service.findAllWithUsersAccoount();
 		return ResponseEntity.ok(dto);
 	}
 	

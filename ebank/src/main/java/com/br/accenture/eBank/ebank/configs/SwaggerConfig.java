@@ -15,9 +15,9 @@ public class SwaggerConfig {
     public OpenAPI customOpenAPI() {
         return new OpenAPI()
                 .info(new Info()
-                        .title("API Exemplo")
+                        .title("API Ebank")
                         .version("1.0")
-                        .description("Documentação da API Exemplo"))
+                        .description("Documentação da API Ebank"))
                 .addSecurityItem(new SecurityRequirement().addList("bearer-jwt"))
                 .components(new Components()
                         .addSecuritySchemes("bearer-jwt",
