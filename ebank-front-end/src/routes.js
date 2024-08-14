@@ -4,6 +4,7 @@ import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 import Home from "./Pages/Home";
 import Cliente from "./Pages/Cliente";
 import Admin from "./Pages/Admin";
+import VisualizarExtrato from "./Components/VisualizarExtrato";
 
 
 //import { isAuthenticatedAdmin, isAuthenticatedDiscente, isAuthenticatedProfSaude, isAuthenticatedPsicologo, isAuthenticatedServidor } from "./auth";
@@ -43,6 +44,7 @@ export default function Routes() {
         <Route path="/" exact component={Home} />
         <Route path="/user" component={Cliente} />
         <Route path="/admin" component={Admin} />
+        <Route path="/extrato" component={VisualizarExtrato} />
         {/* <Route path="/publica/MateriaisOnline" component={MateriaisOnline} /> */}
 
        

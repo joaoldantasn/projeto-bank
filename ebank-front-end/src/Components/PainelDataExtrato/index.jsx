@@ -6,8 +6,10 @@ import { Password } from 'primereact/password';
 import { Toast } from 'primereact/toast';
 import TrasacaoService from '../../Services/TrasacaoService';
 import { useUsuario } from '../../Hooks/useUsuario';
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 
 export default function PainelDataExtrato() {
+    const history = useHistory();
     const usuario = useUsuario();
     const [dataInicio, setDataInicio] = useState(null);
     const [dataFinal, setDataFinal] = useState(null);
@@ -40,10 +42,11 @@ export default function PainelDataExtrato() {
         try {
             await TrasacaoService.getExtrato(id, dataInicio.toISOString(), dataFinal.toISOString());
             showSuccess();
-            // Adicionar timeout e redirecionamento se necessário
+
         } catch (error) {
             console.error("Erro ao enviar o formulário: ", error);
         }
+        history.push('/extrato');
     }
 
     return (
