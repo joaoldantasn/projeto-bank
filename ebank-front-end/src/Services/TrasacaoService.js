@@ -1,11 +1,10 @@
 import axios from 'axios';
 
+const token = localStorage.getItem('token');
 const headers = {
-    'headers': {
-        'Authorization': 'Bearer ' + localStorage.getItem('token'),
-        'Content-Type': 'application/json'
-    }
-}
+    'Authorization': `Bearer ${token}`,
+    'Content-Type': 'application/json'
+};
 
 class TrasacaoService {
 
