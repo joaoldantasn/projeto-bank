@@ -5,7 +5,7 @@ import Home from "./Pages/Home";
 import Cliente from "./Pages/Cliente";
 import Admin from "./Pages/Admin";
 import VisualizarExtrato from "./Components/VisualizarExtrato";
-
+import AgenciaList from './Components/TabViewAllClientes';
 
 //import { isAuthenticatedAdmin, isAuthenticatedDiscente, isAuthenticatedProfSaude, isAuthenticatedPsicologo, isAuthenticatedServidor } from "./auth";
 
@@ -45,6 +45,7 @@ export default function Routes() {
         <Route path="/user" component={Cliente} />
         <Route path="/admin" component={Admin} />
         <Route path="/extrato" component={VisualizarExtrato} />
+        <Route path="/agencias" component={AgenciaList} />
         {/* <Route path="/publica/MateriaisOnline" component={MateriaisOnline} /> */}
 
        

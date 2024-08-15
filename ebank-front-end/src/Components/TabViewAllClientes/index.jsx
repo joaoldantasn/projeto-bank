@@ -4,7 +4,6 @@ import { Column } from 'primereact/column';
 import { Dialog } from 'primereact/dialog';
 
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import { Card } from 'primereact/card';
 import { Button } from 'primereact/button';
 

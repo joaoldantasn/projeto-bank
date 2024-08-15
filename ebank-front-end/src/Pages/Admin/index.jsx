@@ -9,14 +9,13 @@ import BotaoSair from '../../Components/BotaoSair';
 import TabViewCliente from '../../Components/TabViewCliente';
 import SaldoToolbar from '../../Components/SaldoToolbar';
 import AppToolbar from '../../Components/AppToolbar';
-import ListaAgencia from '../../Components/ListaAgencia';
 
 export default function Admin() {
 
     return (
         <div>
             <AppToolbar></AppToolbar>
-
+        
         </div>
 
     );
