@@ -27,6 +27,16 @@ class AgenciaService {
 
     }
 
+    getAllAgenciasComContas(){
+        const token = localStorage.getItem('token');
+        const headers = {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+        };
+
+        return axios.get(`http://localhost:8080/api/agencias/accounts`, { headers })
+    }
+
 
 }
 
