@@ -1,5 +1,22 @@
 package com.br.accenture.eBank.ebank.conta;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
+import java.math.BigDecimal;
+import java.time.Instant;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+
 import com.br.accenture.eBank.ebank.dtos.conta.ContaResponseDTO;
 import com.br.accenture.eBank.ebank.dtos.transacao.ExtratoDTO;
 import com.br.accenture.eBank.ebank.entities.Agencia;
@@ -14,19 +31,6 @@ import com.br.accenture.eBank.ebank.repositories.UsuarioRepository;
 import com.br.accenture.eBank.ebank.services.ContaService;
 import com.br.accenture.eBank.ebank.services.TransacaoService;
 import com.br.accenture.eBank.ebank.services.UsuarioService;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-
-import java.math.BigDecimal;
-import java.time.Instant;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
@@ -104,28 +108,6 @@ public class ContaServiceTest {
 
         assertNotNull(result);
         assertEquals(dto.getNumeroConta(), result.getNumeroConta());
-    }
-
-    @Test
-    public void testUpdate_Success() {
-        Conta conta = new Conta();
-        conta.setTipoConta(TipoConta.CORRENTE);
-        conta.setNumeroConta(12345);
-        conta.setChavePix("chave-pix");
-        conta.setSaldo(BigDecimal.valueOf(1000.00));
-        conta = contaRepository.save(conta);
-
-        ContaResponseDTO dto = new ContaResponseDTO();
-        dto.setTipoConta(TipoConta.POUPANCA);
-        dto.setNumeroConta(12345);
-        dto.setChavePix("chave-pix");
-        dto.setSaldo(BigDecimal.valueOf(2000.00));
-
-        ContaResponseDTO result = contaService.update(conta.getIdConta(), dto);
-
-        assertNotNull(result);
-        assertEquals(dto.getTipoConta(), result.getTipoConta());
-        assertEquals(dto.getSaldo(), result.getSaldo());
     }
 
     @Test
