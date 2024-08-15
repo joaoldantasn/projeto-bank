@@ -2,20 +2,25 @@ import React from 'react';
 //import { Button } from 'primereact/button';
 import { Card } from 'primereact/card';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
-
-import BotaoVoltar from '../../Components/BotaoVoltar';
 import { Button } from 'primereact/button';
-import BotaoSair from '../../Components/BotaoSair';
-import TabViewCliente from '../../Components/TabViewCliente';
-import SaldoToolbar from '../../Components/SaldoToolbar';
-import AppToolbar from '../../Components/AppToolbar';
+
+import AgenciaList from '../../Components/TabViewAllClientes';
+
 
 export default function Admin() {
 
+    const history = useHistory();
+
+    function submeter() {
+        history.push('/novo/usuario');
+    }
+
     return (
         <div>
-            <AppToolbar></AppToolbar>
-        
+            <AgenciaList></AgenciaList>
+            <Card>
+                <Button className={'p-ml-3 p-mt-3'} label='NOVO USUÁRIO' icon='pi pi-user' onClick={submeter} />
+            </Card>
         </div>
 
     );

@@ -6,35 +6,7 @@ import Cliente from "./Pages/Cliente";
 import Admin from "./Pages/Admin";
 import VisualizarExtrato from "./Components/VisualizarExtrato";
 import AgenciaList from './Components/TabViewAllClientes';
-
-//import { isAuthenticatedAdmin, isAuthenticatedDiscente, isAuthenticatedProfSaude, isAuthenticatedPsicologo, isAuthenticatedServidor } from "./auth";
-
-// const PrivateRouteAdmin = ({ component: Component, ...rest }) => (
-//   <Route
-//     {...rest}
-//     render={props =>
-//       isAuthenticatedAdmin() ? (
-//         <Component {...props} />
-//       ) : (
-//         <Redirect to={{ pathname: "/", state: { from: props.location } }} />
-//       )
-//     }
-//   />
-// );
-
-// const PrivateRouteProfSaude = ({ component: Component, ...rest }) => (
-//   <Route
-//     {...rest}
-//     render={props =>
-//       isAuthenticatedProfSaude() ? (
-//         <Component {...props} />
-//       ) : (
-//         <Redirect to={{ pathname: "/", state: { from: props.location } }} />
-//       )
-//     }
-//   />
-// );
-
+import NovoUsuario from "./Pages/NovoUsuario";
 
 
 export default function Routes() {
@@ -46,13 +18,8 @@ export default function Routes() {
         <Route path="/admin" component={Admin} />
         <Route path="/extrato" component={VisualizarExtrato} />
         <Route path="/agencias" component={AgenciaList} />
-        {/* <Route path="/publica/MateriaisOnline" component={MateriaisOnline} /> */}
+        <Route path="/novo/usuario" component={NovoUsuario} />
 
-       
-        {/* <PrivateRouteProfSaude path="/profissionalDeSaude/reportesGrafico" component={ReportesGraficosProfSaude} />
-
-        <PrivateRouteAdmin path="/Admin/perfil" component={PerfilAdmin} /> */}
-       
       </Switch>
     </BrowserRouter>
   );
