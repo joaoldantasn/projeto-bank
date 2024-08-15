@@ -1,6 +1,7 @@
 package com.br.accenture.eBank.ebank.services;
 
 import com.br.accenture.eBank.ebank.dtos.conta.ContaResponseDTO;
+import com.br.accenture.eBank.ebank.dtos.transacao.TransacaoDTO;
 import com.br.accenture.eBank.ebank.dtos.transacao.TransacaoExtratoDTO;
 import com.br.accenture.eBank.ebank.entities.Conta;
 import com.br.accenture.eBank.ebank.entities.Transacao;
@@ -26,7 +27,7 @@ public class TransacaoService {
     @Autowired
     private ContaRepository contaRepository;
 
-    public void sacar(Long contaId, BigDecimal valor) {
+    public TransacaoDTO sacar(Long contaId, BigDecimal valor) {
         Conta conta = contaRepository.findById(contaId)
                 .orElseThrow(() -> new ContaNaoEncontradaException("Conta não encontrada"));
         if (conta.getSaldo().compareTo(valor) < 0) {
@@ -41,10 +42,10 @@ public class TransacaoService {
         transacao.setValor(valor.negate());
         transacao.setTipo(Operacao.SAQUE);
 
-        transacaoRepository.save(transacao);
+        return new TransacaoDTO(transacaoRepository.save(transacao));
     }
 
-    public void depositar(Long contaId, BigDecimal valor) {
+    public TransacaoDTO depositar(Long contaId, BigDecimal valor) {
         Conta conta = contaRepository.findById(contaId)
                 .orElseThrow(() -> new ContaNaoEncontradaException("Conta não encontrada"));
 
@@ -57,13 +58,13 @@ public class TransacaoService {
         transacao.setValor(valor);
         transacao.setTipo(Operacao.DEPOSITO);
 
-        transacaoRepository.save(transacao);
+        return new TransacaoDTO(transacaoRepository.save(transacao));
     }
 
-    public void transferir(Long contaOrigemId, Long contaDestinoId, BigDecimal valor) {
+    public TransacaoDTO transferir(Long contaOrigemId, int numeroConta, BigDecimal valor) {
         Conta contaOrigem = contaRepository.findById(contaOrigemId)
                 .orElseThrow(() -> new ContaNaoEncontradaException("Conta de origem não encontrada"));
-        Conta contaDestino = contaRepository.findById(contaDestinoId)
+        Conta contaDestino = contaRepository.findFirstByNumeroConta(numeroConta)
                 .orElseThrow(() -> new ContaNaoEncontradaException("Conta de destino não encontrada"));
 
         if (contaOrigem.getSaldo().compareTo(valor) < 0) {
@@ -82,10 +83,10 @@ public class TransacaoService {
         transacao.setValor(valor.negate());
         transacao.setTipo(Operacao.TRANSFERENCIA);
 
-        transacaoRepository.save(transacao);
+        return new TransacaoDTO(transacaoRepository.save(transacao));
     }
 
-    public void transferirViaPix(Long contaOrigemId, String chavePix, BigDecimal valor) {
+    public TransacaoDTO transferirViaPix(Long contaOrigemId, String chavePix, BigDecimal valor) {
         System.out.println(chavePix);
         Conta contaOrigem = contaRepository.findById(contaOrigemId)
                 .orElseThrow(() -> new ContaNaoEncontradaException("Conta de origem não encontrada"));
@@ -106,9 +107,9 @@ public class TransacaoService {
         transacao.setContaDestinatario(contaDestino);
         transacao.setDataHora(Instant.now());
         transacao.setValor(valor.negate());
-        transacao.setTipo(Operacao.TRANSFERENCIA);
+        transacao.setTipo(Operacao.TRANSFERENCIA_PIX);
 
-        transacaoRepository.save(transacao);
+       return new TransacaoDTO(transacaoRepository.save(transacao)) ;
     }
 
     public List<TransacaoExtratoDTO> buscarTransacoesPorPeriodo(Conta conta, Instant startDate, Instant endDate) {

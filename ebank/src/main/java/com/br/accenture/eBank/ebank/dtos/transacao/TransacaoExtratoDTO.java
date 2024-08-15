@@ -19,8 +19,6 @@ public class TransacaoExtratoDTO {
     private Instant dataHora;
     private Operacao tipo;
     private BigDecimal valor;
-    private String descricao;
-
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private ContaResponseDTO contaDestinatario;
 

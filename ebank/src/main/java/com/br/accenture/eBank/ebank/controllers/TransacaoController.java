@@ -2,6 +2,8 @@ package com.br.accenture.eBank.ebank.controllers;
 
 import java.math.BigDecimal;
 
+import com.br.accenture.eBank.ebank.dtos.transacao.TransacaoDTO;
+import com.br.accenture.eBank.ebank.entities.Transacao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,46 +24,46 @@ public class TransacaoController {
 
 
     @PostMapping("/sacar")
-    public ResponseEntity<String> sacar(@RequestParam("contaId") Long contaId,
+    public ResponseEntity<?> sacar(@RequestParam("contaId") Long contaId,
                                         @RequestParam("valor") BigDecimal valor) {
         try {
-            transacaoService.sacar(contaId, valor);
-            return ResponseEntity.ok("Saque realizado com sucesso.");
+            TransacaoDTO transacao =  transacaoService.sacar(contaId, valor);
+            return ResponseEntity.ok(transacao);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Erro ao realizar saque: " + e.getMessage());
         }
     }
 
     @PostMapping("/depositar")
-    public ResponseEntity<String> depositar(@RequestParam("contaId") Long contaId,
+    public ResponseEntity<?> depositar(@RequestParam("contaId") Long contaId,
                                             @RequestParam("valor") BigDecimal valor) {
         try {
-            transacaoService.depositar(contaId, valor);
-            return ResponseEntity.ok("Depósito realizado com sucesso.");
+            TransacaoDTO transacao = transacaoService.depositar(contaId, valor);
+            return ResponseEntity.ok(transacao);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Erro ao realizar depósito: " + e.getMessage());
         }
     }
 
     @PostMapping("/transferir")
-    public ResponseEntity<String> transferir(@RequestParam("contaOrigemId") Long contaOrigemId,
-                                             @RequestParam("contaDestinoId") Long contaDestinoId,
-                                             @RequestParam("valor") BigDecimal valor) {
+    public ResponseEntity<?> transferir(@RequestParam("contaOrigemId") Long contaOrigemId,
+                                                   @RequestParam("numeroConta") int numeroConta,
+                                                   @RequestParam("valor") BigDecimal valor) {
         try {
-            transacaoService.transferir(contaOrigemId, contaDestinoId, valor);
-            return ResponseEntity.ok("Transferência realizada com sucesso.");
+           TransacaoDTO transacao = transacaoService.transferir(contaOrigemId, numeroConta, valor);
+            return ResponseEntity.ok(transacao);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Erro ao realizar transferência: " + e.getMessage());
         }
     }
 
     @PostMapping("/transferir/pix")
-    public ResponseEntity<String> transferirViaPix(@RequestParam("contaOrigemId") Long contaOrigemId,
+    public ResponseEntity<?> transferirViaPix(@RequestParam("contaOrigemId") Long contaOrigemId,
                                              @RequestParam("chavePix") String chavePix,
                                              @RequestParam("valor") BigDecimal valor) {
         try {
-            transacaoService.transferirViaPix(contaOrigemId, chavePix, valor);
-            return ResponseEntity.ok("Transferência realizada com sucesso.");
+            TransacaoDTO transacao = transacaoService.transferirViaPix(contaOrigemId, chavePix, valor);
+            return ResponseEntity.ok(transacao);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Erro ao realizar transferência: " + e.getMessage());
         }

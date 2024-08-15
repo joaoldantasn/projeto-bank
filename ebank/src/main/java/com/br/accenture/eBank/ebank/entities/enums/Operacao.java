@@ -4,6 +4,7 @@ public enum Operacao {
 	
 	SAQUE,
 	DEPOSITO,
-	TRANSFERENCIA
+	TRANSFERENCIA,
+	TRANSFERENCIA_PIX
 	
 }

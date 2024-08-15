@@ -10,6 +10,7 @@ import com.br.accenture.eBank.ebank.repositories.ContaRepository;
 import com.br.accenture.eBank.ebank.repositories.TransacaoRepository;
 import com.br.accenture.eBank.ebank.services.TransacaoService;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,17 +38,26 @@ public class TransacaoServiceTest {
 
     private Conta conta1;
     private Conta conta2;
+    private Conta conta3;
+
 
     @BeforeEach
     public void setUp() {
 
         conta1 = new Conta();
         conta1.setSaldo(BigDecimal.valueOf(1000));
+        conta1.setNumeroConta(111111);
         contaRepository.save(conta1);
 
         conta2 = new Conta();
         conta2.setSaldo(BigDecimal.valueOf(500));
+        conta1.setNumeroConta(222222);
         contaRepository.save(conta2);
+
+        conta3 = new Conta();
+        conta3.setSaldo(BigDecimal.valueOf(500));
+        conta3.setNumeroConta(33333);
+        contaRepository.save(conta3);
     }
 
     @Test
@@ -87,14 +97,14 @@ public class TransacaoServiceTest {
 
     @Test
     public void testDepositar() {
-        transacaoService.depositar(conta2.getIdConta(), BigDecimal.valueOf(300));
+        transacaoService.depositar(conta3.getIdConta(), BigDecimal.valueOf(300));
 
-        Conta contaAtualizada = contaRepository.findById(conta2.getIdConta()).orElse(null);
+        Conta contaAtualizada = contaRepository.findById(conta3.getIdConta()).orElse(null);
         assertNotNull(contaAtualizada);
         assertEquals(0,BigDecimal.valueOf(800).compareTo(contaAtualizada.getSaldo()));
 
         List<Transacao> transacoes = transacaoRepository.findByContaAndDataHoraBetween(
-                conta2, Instant.MIN, Instant.MAX);
+                conta3, Instant.MIN, Instant.MAX);
         assertEquals(1, transacoes.size());
 
         Transacao transacao = transacoes.get(0);
@@ -110,10 +120,11 @@ public class TransacaoServiceTest {
 
     @Test
     public void testTransferir() {
-        transacaoService.transferir(conta1.getIdConta(), conta2.getIdConta(), BigDecimal.valueOf(150));
+        transacaoService.transferir(conta1.getIdConta(), conta2.getNumeroConta(), BigDecimal.valueOf(150));
 
         Conta contaOrigemAtualizada = contaRepository.findById(conta1.getIdConta()).orElse(null);
-        Conta contaDestinoAtualizada = contaRepository.findById(conta2.getIdConta()).orElse(null);
+        Conta contaDestinoAtualizada = contaRepository.findFirstByNumeroConta(conta2.getNumeroConta()).orElse(null);
+
         assertNotNull(contaOrigemAtualizada);
         assertNotNull(contaDestinoAtualizada);
         assertEquals(0,BigDecimal.valueOf(850).compareTo(contaOrigemAtualizada.getSaldo()));
@@ -149,7 +160,7 @@ public class TransacaoServiceTest {
         assertEquals(1, transacoes.size());
 
         Transacao transacao = transacoes.get(0);
-        assertEquals(Operacao.TRANSFERENCIA, transacao.getTipo());
+        assertEquals(Operacao.TRANSFERENCIA_PIX, transacao.getTipo());
         assertEquals(0,BigDecimal.valueOf(-250).compareTo(transacao.getValor()));
         assertNotNull(transacao.getContaDestinatario());
         assertEquals(contaDestinoAtualizada.getIdConta(), transacao.getContaDestinatario().getIdConta());
@@ -158,7 +169,7 @@ public class TransacaoServiceTest {
     @Test
     public void testBuscarTransacoesPorPeriodo() {
         transacaoService.sacar(conta1.getIdConta(), BigDecimal.valueOf(100));
-        transacaoService.transferir(conta1.getIdConta(), conta2.getIdConta(), BigDecimal.valueOf(100));
+        transacaoService.transferir(conta1.getIdConta(), conta2.getNumeroConta(), BigDecimal.valueOf(100));
         Instant now = Instant.now();
         List<TransacaoExtratoDTO> transacoes = transacaoService.buscarTransacoesPorPeriodo(
                 conta1, now.minusSeconds(10000), now);
@@ -177,7 +188,7 @@ public class TransacaoServiceTest {
         contaRepository.save(contaDestino);
 
         Exception exception = assertThrows(ContaNaoEncontradaException.class, () -> {
-            transacaoService.transferir(99L, contaDestino.getIdConta(), BigDecimal.valueOf(200));
+            transacaoService.transferir(99L, contaDestino.getNumeroConta(), BigDecimal.valueOf(200));
         });
         assertEquals("Conta de origem não encontrada", exception.getMessage());
     }
@@ -189,7 +200,7 @@ public class TransacaoServiceTest {
         contaRepository.save(contaOrigem);
 
         Exception exception = assertThrows(ContaNaoEncontradaException.class, () -> {
-            transacaoService.transferir(contaOrigem.getIdConta(), 99L, BigDecimal.valueOf(200));
+            transacaoService.transferir(contaOrigem.getIdConta(), 11111, BigDecimal.valueOf(200));
         });
         assertEquals("Conta de destino não encontrada", exception.getMessage());
     }
@@ -205,7 +216,7 @@ public class TransacaoServiceTest {
         contaRepository.save(contaDestino);
 
         Exception exception = assertThrows(SaldoInsuficienteException.class, () -> {
-            transacaoService.transferir(contaOrigem.getIdConta(), contaDestino.getIdConta(), BigDecimal.valueOf(200));
+            transacaoService.transferir(contaOrigem.getIdConta(), contaDestino.getNumeroConta(), BigDecimal.valueOf(200));
         });
         assertEquals("Saldo insuficiente para a transação de valor R$200.", exception.getMessage());
     }

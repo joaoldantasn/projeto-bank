@@ -69,8 +69,6 @@ public class ContaService {
     public void copyDtoToEntity(ContaResponseDTO dto, Conta entity) {
         entity.setTipoConta(dto.getTipoConta());
         entity.setNumeroConta(dto.getNumeroConta());
-        entity.setChavePix(dto.getChavePix());
-        entity.setSaldo(dto.getSaldo());
     }
 
 

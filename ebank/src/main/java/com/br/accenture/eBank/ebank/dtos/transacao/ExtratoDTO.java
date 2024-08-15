@@ -21,4 +21,5 @@ public class ExtratoDTO {
     private Instant periodoFim;
 
 
+
 }

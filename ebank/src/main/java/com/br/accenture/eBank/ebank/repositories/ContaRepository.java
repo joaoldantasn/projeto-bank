@@ -11,4 +11,6 @@ public interface ContaRepository extends JpaRepository<Conta, Long>{
 
     Optional<Conta> findContaByChavePix(String chave);
 
+    Optional<Conta> findFirstByNumeroConta(int numero);
+
 }
