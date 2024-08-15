@@ -7,7 +7,7 @@ export default function BotaoVoltar() {
     const history = useHistory();
     var configBotaoVoltar = "p-button-secondary ";
     const voltar = () => {
-        history.goBack();
+        history.push('/home');
     }
 
     return (

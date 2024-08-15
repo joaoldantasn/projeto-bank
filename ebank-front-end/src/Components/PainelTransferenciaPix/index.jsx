@@ -8,16 +8,28 @@ import { Toast } from 'primereact/toast';
 import TrasacaoService from '../../Services/TrasacaoService';
 import ComprovanteModal from '../comprovante';
 import useGeneratePDF from '../../Hooks/gerarPDF';
-
+import ContaService from '../../Services/ContaService';
+import { useUsuario } from '../../Hooks/useUsuario';
 export default function PainelTransferenciaPix() {
+
+const usuario = useUsuario();
   const [senha, setSenha] = useState('');
-  const idContaInicio = 1;
+  const [conta, setConta] = useState(null);
   const [chavePix, setChavePix] = useState('');
   const [transferencia, setTransferencia] = useState('');
   const [comprovante, setComprovante] = useState(null);
   const [visible, setVisible] = useState(false);
-  
 
+
+  useEffect(()=>{
+    console.log()
+  })
+
+
+
+
+
+  
   const toast = useRef(null);
   const showSuccess = () => {
     toast.current.show({
@@ -28,10 +40,19 @@ export default function PainelTransferenciaPix() {
     });
   };
 
+  async function checkChavePix(){
+    await ContaService.getContaByChavePix(chavePix).then((response) => {
+      setConta(response);
+      console.log(response);
+    }).catch((err) => {
+      console.log(err);
+    })
+  }
+
   async function submeter() {
-    const contaID = 1;
+    if(conta != null && chavePix !== '') {
     TrasacaoService.postTransferirPix(
-      idContaInicio,
+      usuario.idUsuario,
       chavePix,
       transferencia
     ).then((response) => {
@@ -39,7 +60,15 @@ export default function PainelTransferenciaPix() {
       console.log('🚀 ~ submeter ~ data:', response.data);
     });
     showSuccess();
+    }
+    
   }
+  const rowStyle = {
+    width:'30%',
+    display: 'flex',
+    justifyContent: 'space-between',
+    marginBottom: '1rem',
+  };
 
   return (
     <Card subTitle='TRANSFERENCIA'>
@@ -60,17 +89,30 @@ export default function PainelTransferenciaPix() {
           value={chavePix}
           onChange={(e) => setChavePix(e.target.value)}
         />
+        <Button label='Verificar chave' onClick={checkChavePix}/>
       </Card>
 
-      {/* <Card subTitle='SENHA'>
-        <div className='card flex justify-content-center'>
+      {conta != null ? <Card subTitle='Transferir para' >
+
+      <div style={rowStyle}>
+          <div>
+            <h3>Conta</h3>
+            <p>{conta.numeroConta}</p>
+          </div>
+          <div>
+            <h3>Tipo Conta</h3>
+            <p>{conta.tipoConta}</p>
+          </div>
+          </div>
+          
+        {/* <div className='card flex justify-content-center'>
           <Password
             value={senha}
             onChange={(e) => setSenha(e.target.value)}
             toggleMask
           />
-        </div>
-      </Card> */}
+        </div> */}
+      </Card> : null}
       <Card>
         <Button className={''} label='ENVIAR' onClick={submeter} />
       </Card>

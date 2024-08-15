@@ -19,8 +19,11 @@ class TrasacaoService {
     }
 
     postTransferir(contaOrigemId, contaDestinoId, valor) {
+    console.log('🚀 ~ TrasacaoService ~ postTransferir ~ contaDestinoId:', contaDestinoId)
+    http://localhost:8080/api/transacao/transferir?contaOrigemId=1&numeroConta=98765444&valor=188
 
-        return axios.post('http://localhost:8080/api/transacao/transferir?contaOrigemId=' + contaOrigemId + '&contaDestinoId=' + contaDestinoId + '&valor=' + valor,null, {headers});
+
+        return axios.post('http://localhost:8080/api/transacao/transferir?contaOrigemId=' + contaOrigemId + '&numeroConta=' + contaDestinoId + '&valor=' + valor,null, {headers});
     }
 
     getExtrato(id, startDate, endDate) {

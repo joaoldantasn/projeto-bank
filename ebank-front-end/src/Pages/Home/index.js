@@ -1,89 +1,58 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import { TabPanel, TabView } from 'primereact/tabview';
+import TabViewCliente from '../../Components/TabViewCliente';
+import CadastroForm from '../NovoUsuario';
+import AgenciaList from '../../Components/TabViewAllClientes';
+import { useUsuario } from '../../Hooks/useUsuario';
 import { Button } from 'primereact/button';
-import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
-import logoImg from '../../assets/ebank.png';
-import { InputText } from 'primereact/inputtext';
-import { Card } from 'primereact/card';
-import { Password } from 'primereact/password';
-import AuthService from '../../Services/AuthService';
-import UsuarioService from '../../Services/UsuarioService';
 
-export default function Home() {
-    const history = useHistory();
-    const [senha, setSenha] = useState('');
-    const [CPF, setCPF] = useState('');
-    const [usuario, setUsuario] = useState(null);
 
-    const retornaUsuario = async () => {
-        try {
-            const response = await UsuarioService.getUsuarioByCPF(CPF);
-            setUsuario(response.data);
-            salvarUsuarioNoLocalStorage(response.data);
-        } catch (error) {
-            console.error(error);
-        }
-    };
+const Home = () => {
 
-    useEffect(() => {
-        if (CPF) {
-            retornaUsuario();
-        }
-    }, [CPF]);
+  const usuario = useUsuario();
 
-    const salvarUsuarioNoLocalStorage = (usuario) => {
-        if (usuario) {
-            localStorage.setItem('usuario', JSON.stringify(usuario));
-        } else {
-            console.error('Usuário inválido. Não foi possível salvar no localStorage.');
-        }
-    };
+  const [role, setRole] = useState(''); 
+  // 'usuario' ou 'admin'
+  useEffect(() => {
+    setRole(usuario?.role);
+  }, [usuario]);
 
-    async function submeter() {
-        const auth = {
-            "cpf": CPF,
-            "senha": senha
-        };
 
-        try {
-            await AuthService.postLogin(auth);
-            await retornaUsuario();
-
-            if (usuario && usuario.role) {
-                if (usuario.role === "ADMIN") {
-                    history.push('/admin');
-                } else if (usuario.role === "USER") {
-                    history.push('/user');
-                }
-            } else {
-                console.error('Usuário ou role não definido.');
-            }
-        } catch (error) {
-            console.error(error);
-        }
-    }
-
-    return (
-        <div className="home-container p-d-flex p-grid p-flex-wrap p-justify-center p-align-center p-p-6" style={{ margin: 0, height: '100%', padding: 0 }}>
-            <div className="home-ladoEsquerdo">
-                <img src={logoImg} alt="logo" style={{ height: "40em" }} />
+  return (
+    <div className='p-m-3'>
+      <h1>Bem-vindo ao EBank</h1>
+      <div className="p-d-flex p-jc-between p-mb-3">
+                
+                <Button label={role} disabled />
             </div>
-            <div className="home-ladoDireito">
-                <Card subTitle='CPF'>
-                    <InputText
-                        style={{ width: '100%' }}
-                        value={CPF}
-                        onChange={(e) => setCPF(e.target.value)}
-                    />
-                </Card>
-                <Card subTitle='SENHA'>
-                    <div className="card flex justify-content-center">
-                        <Password value={senha} onChange={(e) => setSenha(e.target.value)} toggleMask />
-                    </div>
-                </Card>
-                <Card>
-                    <Button label="LOGIN" onClick={submeter} />
-                </Card>
-            </div>
-        </div>
-    );
-}
+
+      <TabView style={{marginTop: 10}}>
+        {role === 'ADMIN' && (
+          <TabPanel header='Transações'>
+            <TabViewCliente />
+          </TabPanel>
+        )}
+      
+        {role === 'ADMIN' && (
+          <TabPanel header='Agências e Contas'>
+            <AgenciaList />
+          </TabPanel>
+        )}
+
+        {role === 'USER' && (
+          <TabPanel  header='Transações'>
+            <TabViewCliente />
+          </TabPanel>
+        )}
+
+        {role === 'ADMIN' && (
+          <TabPanel header='Criar Usuário'>
+            <CadastroForm />
+          </TabPanel>
+        )}
+      </TabView>
+    </div>
+  );
+};
+
+export default Home;

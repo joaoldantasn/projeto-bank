@@ -8,10 +8,11 @@ import { Toast } from 'primereact/toast';
 import TrasacaoService from '../../Services/TrasacaoService';
 import Comprovante from '../comprovante';
 import ComprovanteModal from '../comprovante';
+import { useUsuario } from '../../Hooks/useUsuario';
 
 export default function PainelTransferencia() {
   const [senha, setSenha] = useState('');
-  const idContaInicio = 1;
+  const usuario = useUsuario();
   const [numeroContaDestino, setNumeroContaDestino] = useState('');
   const [transferencia, setTransferencia] = useState('');
   const [comprovante, setComprovante] = useState(null);
@@ -28,9 +29,8 @@ export default function PainelTransferencia() {
   };
 
   async function submeter() {
-    const contaID = 1;
     TrasacaoService.postTransferir(
-      idContaInicio,
+      usuario.idUsuario,
       numeroContaDestino,
       transferencia
     ).then((response) => {

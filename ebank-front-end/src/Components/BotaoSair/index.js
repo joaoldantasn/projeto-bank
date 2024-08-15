@@ -13,7 +13,7 @@ export default function BotaoSair() {
     }
     const encerrarSessao = () => {
         localStorage.clear();
-        history.push('/');
+        history.push('/login');
     }
 
     return (

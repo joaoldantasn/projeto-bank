@@ -7,8 +7,12 @@ import { Password } from 'primereact/password';
 import { Toast } from 'primereact/toast';
 import TrasacaoService from '../../Services/TrasacaoService';
 import ComprovanteModal from '../comprovante';
+import { useUsuario } from '../../Hooks/useUsuario';
 
 export default function PainelDeposito() {
+
+  const usuario = useUsuario();
+
   const [deposito, setDeposito] = useState('');
   const [senha, setSenha] = useState('');
   const [comprovante, setComprovante] = useState(null);
@@ -25,8 +29,7 @@ export default function PainelDeposito() {
   };
 
   async function submeter() {
-    const contaID = 1;
-    await TrasacaoService.postDepositar(contaID, deposito).then((response) => {
+    await TrasacaoService.postDepositar(usuario.idUsuario, deposito).then((response) => {
       setComprovante(response.data);
       console.log('🚀 ~ submeter ~ data:', response.data);
     });

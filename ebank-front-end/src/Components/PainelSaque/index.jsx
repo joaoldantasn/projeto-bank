@@ -6,8 +6,11 @@ import { Password } from 'primereact/password';
 import { Toast } from 'primereact/toast';
 import TrasacaoService from '../../Services/TrasacaoService';
 import ComprovanteModal from '../comprovante';
+import { useUsuario } from '../../Hooks/useUsuario';
 
 export default function PainelSaque() {
+  const usuario = useUsuario();
+
     const [comprovante, setComprovante] = useState(null);
     const [visible, setVisible] = useState(false);
     const [senha, setSenha] = useState('');
@@ -24,8 +27,7 @@ export default function PainelSaque() {
     }
 
     async function submeter() {
-        const contaID = 1
-        TrasacaoService.postSacar(contaID, saque).then((response) => {
+        TrasacaoService.postSacar(usuario.idUsuario, saque).then((response) => {
             setComprovante(response.data);
             console.log('🚀 ~ submeter ~ data:', response.data);
           }).catch((err) => {

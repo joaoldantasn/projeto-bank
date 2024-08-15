@@ -5,8 +5,10 @@ export function useUsuario() {
 
     const recuperarUsuarioDoLocalStorage = () => {
         const usuarioString = localStorage.getItem('usuario');
+        console.log('🚀 ~ recuperarUsuarioDoLocalStorage ~ usuarioString:', usuarioString);
         try {
             const usuarioObj = JSON.parse(usuarioString);
+            console.log('🚀 ~ recuperarUsuarioDoLocalStorage ~ usuarioObj:', usuarioObj);
             if (usuarioObj && typeof usuarioObj === 'object') {
                 setUsuario(usuarioObj);
                 return usuarioObj;
@@ -24,5 +26,6 @@ export function useUsuario() {
         recuperarUsuarioDoLocalStorage();
     }, []);
 
+    console.log('🚀 ~ useUsuario ~ usuario:', usuario);
     return usuario;
 }
