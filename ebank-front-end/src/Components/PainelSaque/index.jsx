@@ -45,13 +45,13 @@ export default function PainelSaque() {
                     onChange={(e) => setSaque(e.target.value)}
                 />
             </Card>
-            <Card subTitle='SENHA' >
+            {/* <Card subTitle='SENHA' >
                 <div className="card flex justify-content-center">
 
                     <Password value={senha}
                         onChange={(e) => setSenha(e.target.value)} toggleMask />
                 </div>
-            </Card>
+            </Card> */}
             <Card>
                 <Button className={''} label="ENVIAR" onClick={submeter} />
             </Card>

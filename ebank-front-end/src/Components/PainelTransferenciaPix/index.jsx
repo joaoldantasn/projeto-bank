@@ -62,7 +62,7 @@ export default function PainelTransferenciaPix() {
         />
       </Card>
 
-      <Card subTitle='SENHA'>
+      {/* <Card subTitle='SENHA'>
         <div className='card flex justify-content-center'>
           <Password
             value={senha}
@@ -70,7 +70,7 @@ export default function PainelTransferenciaPix() {
             toggleMask
           />
         </div>
-      </Card>
+      </Card> */}
       <Card>
         <Button className={''} label='ENVIAR' onClick={submeter} />
       </Card>
