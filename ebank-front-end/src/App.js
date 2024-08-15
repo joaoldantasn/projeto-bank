@@ -1,5 +1,14 @@
 import './global.css';
 import { PrimeReactCSS } from "primereact/resources/themes/saga-green/theme.css";
+<<<<<<< Updated upstream
+=======
+import { PrimeReactMinCsss } from "primereact/resources/primereact.min.css";
+import { Icons } from "primeicons/primeicons.css";
+import 'primeflex/primeflex.css';
+import Routes from './routes';
+import TabViewListClientes from './Components/TabViewAllClientes';
+import Cliente from './Pages/Cliente';
+>>>>>>> Stashed changes
 
 //import "primereact/resources/themes/lara-light-blue/theme.css";
 //import "primereact/resources/themes/lara-dark-blue/theme.css";
@@ -16,7 +25,13 @@ import Cliente from './Pages/Cliente';
 function App() {
   return (
     <div>
+<<<<<<< Updated upstream
       <Cliente></Cliente>
+=======
+      {/* <Routes></Routes> */}
+      {/* <TabViewListClientes/> */}
+      <Cliente/>
+>>>>>>> Stashed changes
     </div>
   );
 }

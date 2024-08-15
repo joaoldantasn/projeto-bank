@@ -6,8 +6,10 @@ import { Button } from "primereact/button";
 import { Password } from 'primereact/password';
 import { Toast } from 'primereact/toast';
 import TrasacaoService from '../../Services/TrasacaoService';
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 
 export default function PainelDataExtrato() {
+    const history = useHistory();
     const [dataInicio, setDataInicio] = useState(null);
     const [dataFinal, setDataFinal] = useState(null);
     const [senha, setSenha] = useState('');
@@ -24,7 +26,7 @@ export default function PainelDataExtrato() {
 
     async function submeter() {
         const contaID = 1
-        TrasacaoService.getExtrato(id, dataInicio.toISOString(), dataFinal.toISOString())
+       TrasacaoService.getExtrato(id, dataInicio.toISOString(), dataFinal.toISOString())
         showSuccess();
         // fazer tymount e redirecionar para exibir extrato e um botão de download do mesmo.
     }
