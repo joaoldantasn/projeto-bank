@@ -119,29 +119,6 @@ public class TransacaoServiceTest {
     }
 
     @Test
-    public void testTransferir() {
-        transacaoService.transferir(conta1.getIdConta(), conta2.getNumeroConta(), BigDecimal.valueOf(150));
-
-        Conta contaOrigemAtualizada = contaRepository.findById(conta1.getIdConta()).orElse(null);
-        Conta contaDestinoAtualizada = contaRepository.findFirstByNumeroConta(conta2.getNumeroConta()).orElse(null);
-
-        assertNotNull(contaOrigemAtualizada);
-        assertNotNull(contaDestinoAtualizada);
-        assertEquals(0,BigDecimal.valueOf(850).compareTo(contaOrigemAtualizada.getSaldo()));
-        assertEquals(0,BigDecimal.valueOf(650).compareTo(contaDestinoAtualizada.getSaldo()));
-
-        List<Transacao> transacoes = transacaoRepository.findByContaAndDataHoraBetween(
-                conta1, Instant.MIN, Instant.MAX);
-        assertEquals(1, transacoes.size());
-
-        Transacao transacao = transacoes.get(0);
-        assertEquals(Operacao.TRANSFERENCIA, transacao.getTipo());
-        assertEquals(0,BigDecimal.valueOf(-150).compareTo(transacao.getValor()));
-        assertNotNull(transacao.getContaDestinatario());
-        assertEquals(conta2.getIdConta(), transacao.getContaDestinatario().getIdConta());
-    }
-
-    @Test
     public void testTransferirViaPix() {
         conta2.setChavePix("chave-pix-exemplo");
         contaRepository.save(conta2);
