@@ -3,11 +3,13 @@ package com.br.accenture.eBank.ebank.transacao;
 import com.br.accenture.eBank.ebank.dtos.transacao.TransacaoExtratoDTO;
 import com.br.accenture.eBank.ebank.entities.Conta;
 import com.br.accenture.eBank.ebank.entities.Transacao;
+import com.br.accenture.eBank.ebank.entities.Usuario;
 import com.br.accenture.eBank.ebank.entities.enums.Operacao;
 import com.br.accenture.eBank.ebank.exceptions.ContaNaoEncontradaException;
 import com.br.accenture.eBank.ebank.exceptions.SaldoInsuficienteException;
 import com.br.accenture.eBank.ebank.repositories.ContaRepository;
 import com.br.accenture.eBank.ebank.repositories.TransacaoRepository;
+import com.br.accenture.eBank.ebank.repositories.UsuarioRepository;
 import com.br.accenture.eBank.ebank.services.TransacaoService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Order;
@@ -35,28 +37,46 @@ public class TransacaoServiceTest {
 
     @Autowired
     private TransacaoRepository transacaoRepository;
+    @Autowired
+    private UsuarioRepository usuarioRepository;
 
     private Conta conta1;
     private Conta conta2;
     private Conta conta3;
 
-
+    private Usuario usuario1;
+    private Usuario usuario2;
+    private Usuario usuario3;
     @BeforeEach
     public void setUp() {
-
+        usuario1 = new Usuario();
+        usuario1.setNomeUsuario("karl");
+        usuario1.setCpf("123.456.555-01");
+        usuario2 = new Usuario();
+        usuario2.setNomeUsuario("karlasa");
+        usuario2.setCpf("123.456.555-02");
+        usuario3 = new Usuario();
+        usuario3.setNomeUsuario("ssaas");
+        usuario3.setCpf("123.456.555-03");
         conta1 = new Conta();
         conta1.setSaldo(BigDecimal.valueOf(1000));
+        conta1.setUsuario(usuario1);
         conta1.setNumeroConta(111111);
+        usuarioRepository.save(usuario1);
         contaRepository.save(conta1);
 
         conta2 = new Conta();
         conta2.setSaldo(BigDecimal.valueOf(500));
-        conta1.setNumeroConta(222222);
+        conta2.setUsuario(usuario2);
+        conta2.setNumeroConta(222222);
+        usuarioRepository.save(usuario2);
         contaRepository.save(conta2);
 
         conta3 = new Conta();
         conta3.setSaldo(BigDecimal.valueOf(500));
+        conta3.setUsuario(usuario3);
         conta3.setNumeroConta(33333);
+        usuarioRepository.save(usuario3);
         contaRepository.save(conta3);
     }
 

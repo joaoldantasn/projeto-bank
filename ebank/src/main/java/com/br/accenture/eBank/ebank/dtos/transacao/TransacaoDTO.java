@@ -18,6 +18,7 @@ public class TransacaoDTO {
 
     private Long id;
     private Instant dataHora;
+    private String nome;
     private Operacao tipo;
     private BigDecimal valor;
     private ContaResponseDTO conta;
@@ -28,6 +29,7 @@ public class TransacaoDTO {
     public TransacaoDTO(Transacao transacao) {
         this.id = transacao.getIdTransacao();
         this.dataHora = transacao.getDataHora();
+        this.nome = transacao.getConta().getUsuario().getNomeUsuario();
         this.tipo = transacao.getTipo();
         this.valor = transacao.getValor();
         this.conta = transacao.getConta() != null ? new ContaResponseDTO(transacao.getConta()) : null;
