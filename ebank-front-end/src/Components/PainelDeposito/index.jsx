@@ -10,10 +10,9 @@ import ComprovanteModal from '../comprovante';
 import { useUsuario } from '../../Hooks/useUsuario';
 
 export default function PainelDeposito() {
-
   const usuario = useUsuario();
 
-  const [deposito, setDeposito] = useState('');
+  const [deposito, setDeposito] = useState(0);
   const [senha, setSenha] = useState('');
   const [comprovante, setComprovante] = useState(null);
   const [visible, setVisible] = useState(false);
@@ -27,13 +26,27 @@ export default function PainelDeposito() {
       life: 5000,
     });
   };
+  const showError = () => {
+    toast.current.show({
+      severity: 'error',
+      summary: 'Valor invalido!',
+      detail: 'Erro',
+      life: 5000,
+    });
+  };
 
   async function submeter() {
-    await TrasacaoService.postDepositar(usuario.idUsuario, deposito).then((response) => {
-      setComprovante(response.data);
-      console.log('🚀 ~ submeter ~ data:', response.data);
-    });
-    showSuccess();
+    if (deposito > 0) {
+      await TrasacaoService.postDepositar(usuario.idUsuario, deposito).then(
+        (response) => {
+          setComprovante(response.data);
+          console.log('🚀 ~ submeter ~ data:', response.data);
+        }
+      );
+      showSuccess();
+    } else {
+      showError();
+    }
   }
 
   return (

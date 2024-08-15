@@ -11,25 +11,18 @@ import useGeneratePDF from '../../Hooks/gerarPDF';
 import ContaService from '../../Services/ContaService';
 import { useUsuario } from '../../Hooks/useUsuario';
 export default function PainelTransferenciaPix() {
-
-const usuario = useUsuario();
+  const usuario = useUsuario();
   const [senha, setSenha] = useState('');
   const [conta, setConta] = useState(null);
   const [chavePix, setChavePix] = useState('');
-  const [transferencia, setTransferencia] = useState('');
+  const [transferencia, setTransferencia] = useState(0);
   const [comprovante, setComprovante] = useState(null);
   const [visible, setVisible] = useState(false);
 
+  useEffect(() => {
+    console.log();
+  });
 
-  useEffect(()=>{
-    console.log()
-  })
-
-
-
-
-
-  
   const toast = useRef(null);
   const showSuccess = () => {
     toast.current.show({
@@ -40,31 +33,45 @@ const usuario = useUsuario();
     });
   };
 
-  async function checkChavePix(){
-    await ContaService.getContaByChavePix(chavePix).then((response) => {
-      setConta(response);
-      console.log(response);
-    }).catch((err) => {
-      console.log(err);
-    })
+  const showError = () => {
+    toast.current.show({
+      severity: 'error',
+      summary: 'Valor invalido!',
+      detail: 'Erro',
+      life: 5000,
+    });
+  };
+
+  async function checkChavePix() {
+    await ContaService.getContaByChavePix(chavePix)
+      .then((response) => {
+        setConta(response);
+        console.log(response);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
   async function submeter() {
-    if(conta != null && chavePix !== '') {
-    TrasacaoService.postTransferirPix(
-      usuario.idUsuario,
-      chavePix,
-      transferencia
-    ).then((response) => {
-      setComprovante(response.data);
-      console.log('🚀 ~ submeter ~ data:', response.data);
-    });
-    showSuccess();
+    if (transferencia > 0) {
+      if (conta != null && chavePix !== '') {
+        TrasacaoService.postTransferirPix(
+          usuario.idUsuario,
+          chavePix,
+          transferencia
+        ).then((response) => {
+          setComprovante(response.data);
+          console.log('🚀 ~ submeter ~ data:', response.data);
+        });
+        showSuccess();
+      }
+    } else {
+      showError();
     }
-    
   }
   const rowStyle = {
-    width:'30%',
+    width: '30%',
     display: 'flex',
     justifyContent: 'space-between',
     marginBottom: '1rem',
@@ -89,30 +96,31 @@ const usuario = useUsuario();
           value={chavePix}
           onChange={(e) => setChavePix(e.target.value)}
         />
-        <Button label='Verificar chave' onClick={checkChavePix}/>
+        <Button label='Verificar chave' onClick={checkChavePix} />
       </Card>
 
-      {conta != null ? <Card subTitle='Transferir para' >
+      {conta != null ? (
+        <Card subTitle='Transferir para'>
+          <div style={rowStyle}>
+            <div>
+              <h3>Conta</h3>
+              <p>{conta.numeroConta}</p>
+            </div>
+            <div>
+              <h3>Tipo Conta</h3>
+              <p>{conta.tipoConta}</p>
+            </div>
+          </div>
 
-      <div style={rowStyle}>
-          <div>
-            <h3>Conta</h3>
-            <p>{conta.numeroConta}</p>
-          </div>
-          <div>
-            <h3>Tipo Conta</h3>
-            <p>{conta.tipoConta}</p>
-          </div>
-          </div>
-          
-        {/* <div className='card flex justify-content-center'>
+          {/* <div className='card flex justify-content-center'>
           <Password
             value={senha}
             onChange={(e) => setSenha(e.target.value)}
             toggleMask
           />
         </div> */}
-      </Card> : null}
+        </Card>
+      ) : null}
       <Card>
         <Button className={''} label='ENVIAR' onClick={submeter} />
       </Card>
